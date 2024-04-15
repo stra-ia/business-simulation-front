@@ -1,0 +1,36 @@
+.body {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 10px;
+    height: 90%;
+}
+
+.hr {
+    border: 1px solid #4F4F4F
+}
+
+.messageForMe {
+    width: fit-content;
+    height: auto;
+    padding: 14px 16px 14px 16px;
+    gap: 16px;
+    border-radius: 16px;
+    opacity: 0px;
+    background: linear-gradient(90.58deg, #121212 0.13%, #242323 76.43%);
+    color: #909090;
+    margin: 15px 0px;
+    align-self: flex-start;
+}
+
+.messageByMe {
+    width: fit-content;
+    height: auto;
+    padding: 14px 16px 14px 16px;
+    gap: 16px;
+    border-radius: 16px;
+    opacity: 0px;
+    background: #1F672B;
+    margin: 15px 0px;
+    color: #EFEFEF;
+    align-self: flex-end;
+}
