@@ -1,18 +1,37 @@
 "use client";
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import style from './Chatbox.module.css'
 import ChatboxBody from './ChatboxBody'
 import ChatboxFooter from './ChatboxFooter';
+import { Messages, authorType } from './utils/enums';
 
-interface Messages {
-    author: string,
-    message: string,
-    date: string | Date
+const defaultBotMessage = {
+    role: authorType.BOT,
+    message: 'Hello! How can I help you?',
+    date: new Date(),
 }
 
 export default function Chatbox() {
 
     const [messages, setMessages] = useState<Messages[]>([])
+    const [reload, setReload] = useState(false);
+
+    const handleAddMessage = ( message: Messages ) => {
+        let arr = messages;
+        arr.push(message)
+        setMessages([...arr])
+    }
+
+    useEffect(() => {
+        if( messages.length < 1 ){
+            let arr = messages;
+            arr.push(defaultBotMessage)
+            setMessages([...arr])
+        }
+    },[])
+
+    useEffect(() => {
+    },[messages])
 
     return (
         <div className={style.main}>
@@ -20,7 +39,7 @@ export default function Chatbox() {
                 <p>Chat<span>Bot</span></p>
             </div>
             <ChatboxBody messages={messages} />
-            <ChatboxFooter />
+            <ChatboxFooter addMessage={ handleAddMessage } />
         </div>
     )
 }
