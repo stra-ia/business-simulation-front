@@ -4,6 +4,7 @@ import style from './Chatbox.module.css'
 import ChatboxBody from './ChatboxBody'
 import ChatboxFooter from './ChatboxFooter';
 import { Messages, authorType } from './utils/enums';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const defaultBotMessage = {
     role: authorType.BOT,
@@ -15,11 +16,29 @@ export default function Chatbox() {
 
     const [messages, setMessages] = useState<Messages[]>([])
     const [reload, setReload] = useState(false);
+    const genAI = new GoogleGenerativeAI('AIzaSyAszMvafUVl4PJq0XNAm6obfCAe3KF13t4');
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
-    const handleAddMessage = ( message: Messages ) => {
+    const handleAddMessage = async( message: Messages ) => {
         let arr = messages;
         arr.push(message)
         setMessages([...arr])
+        let response = await handleSendGemini(message.message)
+        let newMessage = {
+            role: authorType.BOT,
+            message: response,
+            date: new Date()
+        }
+        arr.push(newMessage)
+        setMessages([...arr])
+    }
+
+    const handleSendGemini = async( prompt : string ) => {
+        // const prompt = "Write a story about a magic carrot.";
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+        const text = response.text();
+        return text;
     }
 
     useEffect(() => {
