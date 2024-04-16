@@ -32,8 +32,9 @@ export default function ChatboxFooter({ addMessage } : ChatboxFooterProps ) {
     return (
         <div className={style.footer}>
             <button className={style.button} name='button' type='button' >Boton</button>
-            <input value={message} onKeyDown={handleKeyDown}  onChange={handleChangeMessage} type="text" />
+            <input className={style.input} value={message} onKeyDown={handleKeyDown}  onChange={handleChangeMessage} type="text" />
             <button className={style.button}  onClick={handleCreateMessage} name='button' type='button' >Boton</button>
+            <button className={style.buttonVoice}  name='button' type='button' >Boton</button>
         </div>
     )
 }
