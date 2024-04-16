@@ -8,6 +8,7 @@
     scrollbar-width: none;/*fancy width*/
     /* scrollbar-color: #f3f0dd #154734; */
     scrollbar-color: #a1a1a1 transparent !important;
+    height: 100%;
 }
 
 .body::-webkit-scrollbar {
@@ -25,6 +26,18 @@
 
 .hr {
     border: 1px solid #4F4F4F
+}
+
+.dateSpan {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 15.6px;
+    color: #737373;
 }
 
 .messageForMe {

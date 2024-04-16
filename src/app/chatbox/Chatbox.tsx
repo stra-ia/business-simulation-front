@@ -24,21 +24,34 @@ export default function Chatbox() {
         arr.push(message)
         setMessages([...arr])
         let response = await handleSendGemini(message.message)
+        // let newMessage = {
+        //     role: authorType.BOT,
+        //     message: response,
+        //     date: new Date()
+        // }
+        // arr.push(newMessage)
+        // setMessages([...arr])
+    }
+
+    const handleSendGemini = async( prompt : string ) => {
+        const result = await model.generateContentStream(prompt);
+        // const response = await result.response;
+
+        let text = '';
+        let arr = messages;
         let newMessage = {
             role: authorType.BOT,
-            message: response,
+            message: '',
             date: new Date()
         }
         arr.push(newMessage)
         setMessages([...arr])
-    }
-
-    const handleSendGemini = async( prompt : string ) => {
-        // const prompt = "Write a story about a magic carrot.";
-        const result = await model.generateContent(prompt);
-        const response = await result.response;
-        const text = response.text();
-        return text;
+        for await (const chunk of result.stream) {
+            const chunkText = chunk.text();
+            text += chunkText;
+            arr[arr.length-1].message = text;
+            setMessages([...arr])
+        }
     }
 
     useEffect(() => {
