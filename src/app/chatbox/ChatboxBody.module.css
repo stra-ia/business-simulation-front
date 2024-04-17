@@ -102,3 +102,26 @@
     letter-spacing: 0.0075em;
     text-align: left;
 }
+
+.imageByMe {
+    width: fit-content;
+    height: auto;
+    padding: 8px 8px 8px 8px;
+    gap: 16px;
+    border-radius: 16px;
+    opacity: 0px;
+    background: #0A089380;
+    margin: 15px 0px;
+    color: #EFEFEF;
+    align-self: flex-end;
+    font-family: Poppins;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 10px;
+    letter-spacing: 0.0075em;
+    text-align: left;
+}
+
+.image {
+    border-radius: 12px;
+}

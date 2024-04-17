@@ -11,12 +11,12 @@ export default function ChatboxFooter({ addMessage } : ChatboxFooterProps ) {
     const [message, setMessage] = useState('');
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [file, setFile] = useState<any[]>([])
+    const [previewFile, setPreviewFile] = useState('')
     const handleChangeMessage = ( e: ChangeEvent<HTMLInputElement> ) => {
             setMessage(e.target.value)
     }
 
     const fileToGenerativePart = async(item: any) => {
-        console.log(item,'item')
         const base64EncodedDataPromise = new Promise((resolve) => {
           const reader = new FileReader();
           if ( reader ){
@@ -25,9 +25,7 @@ export default function ChatboxFooter({ addMessage } : ChatboxFooterProps ) {
           }
           
         });
-        console.log('aquii')
         let data = await base64EncodedDataPromise
-        console.log(data,'dataa')
         return {
             inlineData: { 
                 data, 
@@ -57,10 +55,12 @@ export default function ChatboxFooter({ addMessage } : ChatboxFooterProps ) {
         let newMessage = {
             role: authorType.USER,
             message: message,
+            image: previewFile,
             date: new Date()
         }
         addMessage(newMessage, imageParts)
         setMessage('')
+        setPreviewFile('')
        }
     }
 
@@ -72,12 +72,15 @@ export default function ChatboxFooter({ addMessage } : ChatboxFooterProps ) {
 
   
     const handleChangeFile = (event: ChangeEvent<HTMLInputElement>) => { 
-        console.log(event.target.files,'files')
         if( event.target.files != undefined && event.target.files?.length > 0 ){
-            setFile([...file,event.target.files[0]])
-        }
-        
+            setFile([event.target.files[0]])
+            setPreviewFile(URL.createObjectURL(event.target.files[0]))
+        }   
     }
+
+    useEffect(() => {
+    },[file])
+
 
     return (
         <div className={style.footer}>
