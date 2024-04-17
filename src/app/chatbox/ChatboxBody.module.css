@@ -40,6 +40,31 @@
     color: #737373;
 }
 
+.messageContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0px;
+    opacity: 0px;
+}
+
+.iconContainer {
+    border-radius: 20px;
+    width: 40px;
+    height: 40px;
+    gap: 0px;
+    opacity: 0px;
+    background: linear-gradient(180deg, #A35800 0%, #6A3C05 100%);
+    position: relative;
+    margin-right: 10px;
+}
+
+.iconRobot {
+    position: absolute;
+    left: -30px;
+    top: 5px;
+}
+
 .messageForMe {
     width: fit-content;
     height: auto;

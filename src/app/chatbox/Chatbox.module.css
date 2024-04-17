@@ -18,12 +18,16 @@
 .chatBotHeader {
     width: Fill (675px)px;
     height: Hug (92px)px;
-    padding: 24px 60px 24px 60px;
+    padding: 15px 60px 15px 60px;
     gap: 16px;
     border-radius: 18px;
     opacity: 0px;
     background-color: #0A08934D;
     margin-bottom: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 
 .chatBotHeader p{
@@ -43,6 +47,19 @@
     line-height: 44px;
     letter-spacing: 0.01em;
     text-align: left;
+}
+
+.chatBotHeaderIconContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+}
+
+.chatBotHeaderTextContainer{
+    display: flex;
+    flex-direction: column;
 }
 
 .chatBotBody {

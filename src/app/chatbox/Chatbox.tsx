@@ -5,6 +5,7 @@ import ChatboxBody from './ChatboxBody'
 import ChatboxFooter from './ChatboxFooter';
 import { Messages, authorType } from './utils/enums';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import Image from 'next/image';
 
 const defaultBotMessage = {
     role: authorType.BOT,
@@ -15,27 +16,39 @@ const defaultBotMessage = {
 export default function Chatbox() {
 
     const [messages, setMessages] = useState<Messages[]>([])
-    const [reload, setReload] = useState(false);
     const genAI = new GoogleGenerativeAI('AIzaSyAszMvafUVl4PJq0XNAm6obfCAe3KF13t4');
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const modelTextOnly = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const modelMultimedia = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
 
     const handleAddMessage = async( message: Messages ) => {
         let arr = messages;
         arr.push(message)
         setMessages([...arr])
-        let response = await handleSendGemini(message.message)
-        // let newMessage = {
-        //     role: authorType.BOT,
-        //     message: response,
-        //     date: new Date()
-        // }
-        // arr.push(newMessage)
-        // setMessages([...arr])
+        await handleSend(message.message)
     }
 
-    const handleSendGemini = async( prompt : string ) => {
-        const result = await model.generateContentStream(prompt);
-        // const response = await result.response;
+    const handleSend = async( prompt : string ) => {
+        const result = await modelTextOnly.generateContentStream(prompt);
+
+        let text = '';
+        let arr = messages;
+        let newMessage = {
+            role: authorType.BOT,
+            message: '',
+            date: new Date()
+        }
+        arr.push(newMessage)
+        setMessages([...arr])
+        for await (const chunk of result.stream) {
+            const chunkText = chunk.text();
+            text += chunkText;
+            arr[arr.length-1].message = text;
+            setMessages([...arr])
+        }
+    }
+
+    const handleSendMultimedia = async( prompt : string ) => {
+        const result = await modelTextOnly.generateContentStream(prompt);
 
         let text = '';
         let arr = messages;
@@ -68,7 +81,18 @@ export default function Chatbox() {
     return (
         <div className={style.main}>
             <div className={style.chatBotHeader}>
-                <p>Chat<span>Bot</span></p>
+                <div className={style.chatBotHeaderIconContainer}>
+                    <Image
+                        priority
+                        src='/chatBubble.svg'
+                        alt="Vercel Logo"
+                        width={100}
+                        height={24}
+                    />
+                </div>  
+                <div className={style.chatBotHeaderTextContainer}>
+                    <p>Chat<span>Bot</span></p>
+                </div>
             </div>
             <ChatboxBody messages={messages} />
             <ChatboxFooter addMessage={ handleAddMessage } />

@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo } from 'react'
 import style from './ChatboxBody.module.css'
 import { Messages, authorType } from './utils/enums';
+import Image from 'next/image';
 
 interface ChatboxBodyProps {
     messages: Messages[];
@@ -31,8 +32,6 @@ useEffect(() => {},[messages])
     [messages],
     );
 
-    console.log(groups,'groups')
-
     return (
         <>
         <hr className={style.hr} />
@@ -43,9 +42,31 @@ useEffect(() => {},[messages])
                             <span className={ style.dateSpan }>{date}</span>
                         {
                             messagesGroups.length > 0 && messages.map(( item, i ) => (
-                                <div key={i} className={ item.role == authorType.BOT ? style.messageForMe : style.messageByMe }>
-                                    {item.message}
-                                </div>
+                                <>
+                                {
+                                    item.role == authorType.BOT ?
+                                    <div className={style.messageContainer}>
+                                    
+                                        <div className={style.iconContainer}>
+                                            <Image
+                                                priority
+                                                src='/robot.svg'
+                                                alt="Vercel Logo"
+                                                width={100}
+                                                height={24}
+                                                className={style.iconRobot }
+                                            />
+                                        </div>
+                                        <div key={i} className={ style.messageForMe }>
+                                            {item.message}
+                                        </div>
+                                    </div>
+                                    :
+                                    <div key={i} className={ style.messageByMe }>
+                                        {item.message}
+                                    </div>
+                                }
+                                </>
                             )) 
                         }
                         </React.Fragment>
