@@ -20,11 +20,16 @@ export default function Chatbox() {
     const modelTextOnly = genAI.getGenerativeModel({ model: "gemini-pro" });
     const modelMultimedia = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
 
-    const handleAddMessage = async( message: Messages ) => {
+    const handleAddMessage = async( message: Messages, image: any = null ) => {
         let arr = messages;
         arr.push(message)
         setMessages([...arr])
-        await handleSend(message.message)
+        if( image ){
+            await handleSendMultimedia(message.message, image)
+        }else{
+            await handleSend(message.message)
+        }
+        
     }
 
     const handleSend = async( prompt : string ) => {
@@ -47,8 +52,8 @@ export default function Chatbox() {
         }
     }
 
-    const handleSendMultimedia = async( prompt : string ) => {
-        const result = await modelTextOnly.generateContentStream(prompt);
+    const handleSendMultimedia = async( prompt : string, image: any ) => {
+        const result = await modelMultimedia.generateContentStream([prompt, ...image]);
 
         let text = '';
         let arr = messages;
@@ -57,8 +62,10 @@ export default function Chatbox() {
             message: '',
             date: new Date()
         }
+
         arr.push(newMessage)
         setMessages([...arr])
+
         for await (const chunk of result.stream) {
             const chunkText = chunk.text();
             text += chunkText;

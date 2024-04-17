@@ -45,7 +45,7 @@ useEffect(() => {},[messages])
                                 <>
                                 {
                                     item.role == authorType.BOT ?
-                                    <div className={style.messageContainer}>
+                                    <div key={i} className={style.messageContainer}>
                                     
                                         <div className={style.iconContainer}>
                                             <Image

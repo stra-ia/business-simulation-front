@@ -1,9 +1,9 @@
 import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react'
 import style from './ChatboxFooter.module.css'
-import { HandleAdd, authorType } from './utils/enums'
+import { HandleAdd, authorType } from './utils/enums';
 import Image from 'next/image';
 interface ChatboxFooterProps {
-    addMessage: HandleAdd
+    addMessage: HandleAdd,
 }
 
 export default function ChatboxFooter({ addMessage } : ChatboxFooterProps ) {
@@ -14,6 +14,28 @@ export default function ChatboxFooter({ addMessage } : ChatboxFooterProps ) {
     const handleChangeMessage = ( e: ChangeEvent<HTMLInputElement> ) => {
             setMessage(e.target.value)
     }
+
+    const fileToGenerativePart = async(item: any) => {
+        console.log(item,'item')
+        const base64EncodedDataPromise = new Promise((resolve) => {
+          const reader = new FileReader();
+          if ( reader ){
+            reader.onloadend = () => resolve(reader.result?.split(',')[1]);
+            reader.readAsDataURL(item);
+          }
+          
+        });
+        console.log('aquii')
+        let data = await base64EncodedDataPromise
+        console.log(data,'dataa')
+        return {
+            inlineData: { 
+                data, 
+                mimeType: item.type 
+            },
+        };
+    }
+
 
     const handleCreateMessage = async() => {
         if( !message || message.length < 1 ){
@@ -29,11 +51,16 @@ export default function ChatboxFooter({ addMessage } : ChatboxFooterProps ) {
             setMessage('')
         } 
        else{
-        console.log('aca??',file)
         const imageParts = await Promise.all(
             file.map(fileToGenerativePart)
           );
-        console.log(imageParts,'parts')
+        let newMessage = {
+            role: authorType.USER,
+            message: message,
+            date: new Date()
+        }
+        addMessage(newMessage, imageParts)
+        setMessage('')
        }
     }
 
@@ -43,26 +70,11 @@ export default function ChatboxFooter({ addMessage } : ChatboxFooterProps ) {
         }
     };
 
-    const fileToGenerativePart = async(file: any) => {
-        const base64EncodedDataPromise = new Promise((resolve) => {
-          const reader = new FileReader();
-          console.log('reader',reader)
-          if ( reader && reader.result != null){
-            reader.onloadend = () => resolve(reader.result?.split(',')[1]);
-            reader.readAsDataURL(file);
-          }
-          console.log('hasta acaaaaa')
-        });
-
-        return {
-          inlineData: { data: await base64EncodedDataPromise, mimeType: file.type },
-        };
-    }
-
+  
     const handleChangeFile = (event: ChangeEvent<HTMLInputElement>) => { 
         console.log(event.target.files,'files')
         if( event.target.files != undefined && event.target.files?.length > 0 ){
-            setFile([event.target.files])
+            setFile([...file,event.target.files[0]])
         }
         
     }

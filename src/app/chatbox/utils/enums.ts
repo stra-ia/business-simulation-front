@@ -12,4 +12,5 @@ export interface Messages {
 
 export type HandleAdd = (
     message: Messages,
+    image?: any
 ) => void;
