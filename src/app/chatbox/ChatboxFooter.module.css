@@ -32,6 +32,7 @@
     opacity: 0px;
     background: #A35800;
     position: relative;
+    border: none;
 }
 
 .buttonVoice:hover{
@@ -52,6 +53,6 @@
 
 .iconFooter {
     position: absolute;
-    left: 7px;
-    top: 2px;
+    left: 11px;
+    top: 11px;
 }

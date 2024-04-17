@@ -68,7 +68,7 @@
 .messageForMe {
     width: fit-content;
     height: auto;
-    padding: 14px 16px 14px 16px;
+    padding: 8px 16px 8px 16px;
     gap: 16px;
     border-radius: 16px;
     opacity: 0px;
@@ -87,7 +87,7 @@
 .messageByMe {
     width: fit-content;
     height: auto;
-    padding: 14px 16px 14px 16px;
+    padding: 8px 16px 8px 16px;
     gap: 16px;
     border-radius: 16px;
     opacity: 0px;

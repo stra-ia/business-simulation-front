@@ -55,8 +55,8 @@ export default function ChatboxFooter({ addMessage } : ChatboxFooterProps ) {
                     priority
                     src='/clip.svg'
                     alt="Attach image"
-                    width={20}
-                    height={30}
+                    width={15}
+                    height={15}
                     className={style.iconFooter }
                 />
             </button>
@@ -76,18 +76,21 @@ export default function ChatboxFooter({ addMessage } : ChatboxFooterProps ) {
                     priority
                     src='/paper-plane.svg'
                     alt="Send"
-                    width={20}
-                    height={30}
+                    width={15}
+                    height={15}
                     className={style.iconFooter }
                 />
             </button>
-            <button className={style.buttonVoice}  name='button' type='button'>
+            <button 
+                className={style.buttonVoice}  
+                name='button' 
+                type='button'>
                 <Image
                     priority
                     src='/microphone.svg'
                     alt="Voice"
-                    width={20}
-                    height={30}
+                    width={15}
+                    height={15}
                     className={style.iconFooter }
                 />
             </button>
