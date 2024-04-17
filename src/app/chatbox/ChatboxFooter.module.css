@@ -16,6 +16,7 @@
     border: 1px solid #A9A9A9;
     opacity: 0px;
     background: #A3580033;
+    position: relative;
 }
 
 .button:hover {
@@ -30,6 +31,7 @@
     border-radius: 12px;
     opacity: 0px;
     background: #A35800;
+    position: relative;
 }
 
 .buttonVoice:hover{
@@ -46,4 +48,10 @@
     border: 1px solid #676767;
     background: linear-gradient(90.58deg, #121212 0.13%, #242323 76.43%);
     color: #A9A9A9;
+}
+
+.iconFooter {
+    position: absolute;
+    left: 7px;
+    top: 2px;
 }

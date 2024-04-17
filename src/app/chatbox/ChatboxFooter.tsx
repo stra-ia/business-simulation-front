@@ -1,6 +1,7 @@
 import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react'
 import style from './ChatboxFooter.module.css'
 import { HandleAdd, authorType } from './utils/enums'
+import Image from 'next/image';
 interface ChatboxFooterProps {
     addMessage: HandleAdd
 }
@@ -49,10 +50,19 @@ export default function ChatboxFooter({ addMessage } : ChatboxFooterProps ) {
 
     return (
         <div className={style.footer}>
-            <button className={style.button} name='button' type='button' >Boton</button>
+            <button className={style.button} name='button' type='button'>
+                <Image
+                    priority
+                    src='/clip.svg'
+                    alt="Attach image"
+                    width={20}
+                    height={30}
+                    className={style.iconFooter }
+                />
+            </button>
             <input 
                 className={style.input} 
-                placeholder='Escribe algo...' 
+                placeholder='Write something...' 
                 value={message} 
                 onKeyDown={handleKeyDown}  
                 onChange={handleChangeMessage} 
@@ -61,9 +71,26 @@ export default function ChatboxFooter({ addMessage } : ChatboxFooterProps ) {
                 className={style.button}  
                 onClick={handleCreateMessage} 
                 name='button' 
-                type='button'>Boton
+                type='button'>
+                <Image
+                    priority
+                    src='/paper-plane.svg'
+                    alt="Send"
+                    width={20}
+                    height={30}
+                    className={style.iconFooter }
+                />
             </button>
-            <button className={style.buttonVoice}  name='button' type='button' >Boton</button>
+            <button className={style.buttonVoice}  name='button' type='button'>
+                <Image
+                    priority
+                    src='/microphone.svg'
+                    alt="Voice"
+                    width={20}
+                    height={30}
+                    className={style.iconFooter }
+                />
+            </button>
         </div>
     )
 }
