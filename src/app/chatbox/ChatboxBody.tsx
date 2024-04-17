@@ -12,7 +12,7 @@ export default function ChatboxBody( {messages} : ChatboxBodyProps ) {
 useEffect(() => {},[])
 useEffect(() => {},[messages])
 
-    function groupMessagesByDateAndSender(messages: any) {
+    const groupMessagesByDateAndSender = (messages: any) => {
         return messages.reduce((groups: any, message: any) => {
             const dayWeek = message.date.toLocaleDateString('en-US', { weekday: "long" });  
             const dayMonth = message.date.getDate(); 
