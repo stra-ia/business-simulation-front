@@ -62,9 +62,24 @@ useEffect(() => {},[messages])
                                         </div>
                                     </div>
                                     :
-                                    <div key={i} className={ style.messageByMe }>
-                                        {item.message}
-                                    </div>
+                                    <>
+                                        <div key={i} className={ style.messageByMe }>
+                                            {item.message}
+                                        </div>
+                                        {
+                                            item.image && 
+                                            <div key={i} className={ style.imageByMe }>
+                                                <Image
+                                                    priority
+                                                    src={item.image}
+                                                    alt="Image"
+                                                    width={200}
+                                                    height={200}
+                                                    className={style.image}
+                                                />
+                                            </div>
+                                        }
+                                    </>
                                 }
                                 </>
                             )) 

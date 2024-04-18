@@ -10,6 +10,7 @@ import Image from 'next/image';
 const defaultBotMessage = {
     role: authorType.BOT,
     message: 'Hello! How can I help you?',
+    image: '',
     date: new Date(),
 }
 

@@ -7,6 +7,7 @@ export enum authorType  {
 export interface Messages {
     role: authorType,
     message: string,
+    image?: string,
     date: string | Date
 }
 
