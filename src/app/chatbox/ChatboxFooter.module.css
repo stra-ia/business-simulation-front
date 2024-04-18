@@ -21,6 +21,8 @@
 
 .button:hover {
     cursor: pointer;
+    background-color: #c3803333;
+    transition: all 0.25s ease;
 }
 
 .buttonVoice {
@@ -37,6 +39,10 @@
 
 .buttonVoice:hover{
     cursor: pointer;
+    color: rgba(255, 255, 255, 1);
+    background-color: #f67b10;
+    box-shadow: 0 0px 15px rgba(235, 131, 13, 0.794);
+    transition: all 0.25s ease;
 }
 
 .input {
