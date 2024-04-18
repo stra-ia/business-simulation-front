@@ -1,15 +1,17 @@
 import React, { useEffect, useMemo } from 'react'
 import style from './ChatboxBody.module.css'
-import { Messages, authorType } from './utils/enums';
+import { AreaType, Messages, authorType } from './utils/enums';
 import Image from 'next/image';
 
 interface ChatboxBodyProps {
     messages: Messages[];
+    type: AreaType
 }
 
-export default function ChatboxBody( {messages} : ChatboxBodyProps ) {
+export default function ChatboxBody( {messages, type} : ChatboxBodyProps ) {
     
-useEffect(() => {},[])
+useEffect(() => {
+},[])
 useEffect(() => {},[messages])
 
     const groupMessagesByDateAndSender = (messages: any) => {
@@ -34,6 +36,16 @@ useEffect(() => {},[messages])
 
     return (
         <>
+        {
+            type == AreaType.MARKETING && 
+            (
+                <div className={style.briefDisclaimer}>
+                    <span>
+                        Definiendo Brief. Puedes iniciar la conversación para construir tu campaña.
+                    </span>
+                </div>
+            )
+        } 
         <hr className={style.hr} />
             <div className={style.body}>  
                 {

@@ -25,7 +25,39 @@
 } */
 
 .hr {
-    border: 1px solid #4F4F4F
+    /* border: 1px solid #4F4F4F */
+    height: 0px;
+    border: none;
+    border-top: 1px solid #4F4F4F;
+
+}
+
+.briefDisclaimer {
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+
+    width: 675px;
+    height: 32px;
+    padding: 0px 8px 0px 8px;
+    gap: 10px;
+    border-radius: 8px;
+    opacity: 0px;
+    border: 1px solid #3D3D3D;
+    background: #171717;
+    margin: 10px 0px 15px;
+    justify-content: center;
+    align-items: center;
+}
+
+.briefDisclaimer span {
+    font-family: Poppins;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0.0075em;
+    text-align: left;
+    color: #F1F1F1;
 }
 
 .dateSpan {

@@ -3,18 +3,22 @@ import React, { useEffect, useState } from 'react'
 import style from './Chatbox.module.css'
 import ChatboxBody from './ChatboxBody'
 import ChatboxFooter from './ChatboxFooter';
-import { Messages, authorType } from './utils/enums';
+import { AreaType, Messages, authorType } from './utils/enums';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import Image from 'next/image';
 
 const defaultBotMessage = {
     role: authorType.BOT,
-    message: 'Hello! How can I help you?',
+    message: '¡Hola! ¿como puedo ayudarte?',
     image: '',
     date: new Date(),
 }
 
-export default function Chatbox() {
+interface ChatBoxProps {
+    type: AreaType
+}
+
+export default function Chatbox({ type = AreaType.SALES } : ChatBoxProps) {
 
     const [messages, setMessages] = useState<Messages[]>([])
     const genAI = new GoogleGenerativeAI('AIzaSyAszMvafUVl4PJq0XNAm6obfCAe3KF13t4');
@@ -102,7 +106,7 @@ export default function Chatbox() {
                     <p>Chat<span>Bot</span></p>
                 </div>
             </div>
-            <ChatboxBody messages={messages} />
+            <ChatboxBody type={type} messages={messages} />
             <ChatboxFooter addMessage={ handleAddMessage } />
         </div>
     )

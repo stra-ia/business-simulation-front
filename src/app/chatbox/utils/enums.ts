@@ -4,6 +4,11 @@ export enum authorType  {
     USER = 'user'
 }
 
+export enum AreaType  {
+    MARKETING = 'marketing',
+    SALES = 'sales'
+}
+
 export interface Messages {
     role: authorType,
     message: string,
