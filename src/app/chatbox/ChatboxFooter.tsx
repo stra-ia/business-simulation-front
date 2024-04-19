@@ -39,7 +39,7 @@ export default function ChatboxFooter({ addMessage } : ChatboxFooterProps ) {
         if( !message || message.length < 1 ){
             return;
         }
-        if( file == null || file == undefined ) {
+        if( file == null || file == undefined || file.length < 1) {
             let newMessage = {
                 role: authorType.USER,
                 message: message,

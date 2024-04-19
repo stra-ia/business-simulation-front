@@ -18,7 +18,7 @@ interface ChatBoxProps {
     type: AreaType
 }
 
-export default function Chatbox({ type = AreaType.SALES } : ChatBoxProps) {
+export default function Chatbox({ type = AreaType.MARKETING } : ChatBoxProps) {
 
     const [messages, setMessages] = useState<Messages[]>([])
     const genAI = new GoogleGenerativeAI('AIzaSyAszMvafUVl4PJq0XNAm6obfCAe3KF13t4');

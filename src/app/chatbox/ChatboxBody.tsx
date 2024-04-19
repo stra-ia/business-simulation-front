@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import style from './ChatboxBody.module.css'
 import { AreaType, Messages, authorType } from './utils/enums';
 import Image from 'next/image';
@@ -9,10 +9,15 @@ interface ChatboxBodyProps {
 }
 
 export default function ChatboxBody( {messages, type} : ChatboxBodyProps ) {
+
+    const bodyRef = useRef<HTMLDivElement>(null);
+    useEffect(() => {},[])
+    useEffect(() => {},[messages])
+    useEffect(() => {
+        //3️⃣ bring the last item into view        
+        bodyRef.current?.lastElementChild?.scrollIntoView()
+    }, [messages]);
     
-useEffect(() => {
-},[])
-useEffect(() => {},[messages])
 
     const groupMessagesByDateAndSender = (messages: any) => {
         return messages.reduce((groups: any, message: any) => {
@@ -47,7 +52,7 @@ useEffect(() => {},[messages])
             )
         } 
         <hr className={style.hr} />
-            <div className={style.body}>  
+            <div ref={bodyRef} className={style.body}>  
                 {
                     groups.map(([date, messagesGroups], index) => (
                         <React.Fragment key={index}>

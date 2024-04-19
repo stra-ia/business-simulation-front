@@ -21,7 +21,7 @@
 
 .button:hover {
     cursor: pointer;
-    background-color: #c3803333;
+    background-color: #d6903f33;
     transition: all 0.25s ease;
 }
 
