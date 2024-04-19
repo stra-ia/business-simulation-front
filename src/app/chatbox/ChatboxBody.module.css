@@ -1,7 +1,7 @@
 .body {
     display: flex;
     flex-direction: column;
-    padding: 20px 10px;
+    padding: 20px 0px;
     max-height: 100%;
     overflow-x: hidden !important;
     overflow-y: auto !important;
@@ -84,6 +84,8 @@
     border-radius: 20px;
     width: 40px;
     height: 40px;
+    max-width: 45px;
+    min-width: 41px;
     gap: 0px;
     opacity: 0px;
     background: linear-gradient(180deg, #A35800 0%, #6A3C05 100%);
@@ -114,6 +116,10 @@
     line-height: 24px;
     letter-spacing: 0.0075em;
     text-align: left;
+}
+
+.messageForMe li {
+    margin-left: 5px;
 }
 
 .messageByMe {

@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef } from 'react'
 import style from './ChatboxBody.module.css'
 import { AreaType, Messages, authorType } from './utils/enums';
 import Image from 'next/image';
+import Markdown from 'react-markdown';
 
 interface ChatboxBodyProps {
     messages: Messages[];
@@ -75,7 +76,7 @@ export default function ChatboxBody( {messages, type} : ChatboxBodyProps ) {
                                             />
                                         </div>
                                         <div key={i} className={ style.messageForMe }>
-                                            {item.message}
+                                            <Markdown>{item.message}</Markdown>
                                         </div>
                                     </div>
                                     :
