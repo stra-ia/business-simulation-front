@@ -2,6 +2,7 @@ import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react'
 import style from './ChatboxFooter.module.css'
 import { HandleAdd, authorType } from './utils/enums';
 import Image from 'next/image';
+import { validateImageFile } from './utils/validations';
 interface ChatboxFooterProps {
     addMessage: HandleAdd,
 }
@@ -73,6 +74,10 @@ export default function ChatboxFooter({ addMessage } : ChatboxFooterProps ) {
   
     const handleChangeFile = (event: ChangeEvent<HTMLInputElement>) => { 
         if( event.target.files != undefined && event.target.files?.length > 0 ){
+            if (!validateImageFile(event.target.files)) {
+                console.log('not valid format')
+                return;
+            }
             setFile([event.target.files[0]])
             setPreviewFile(URL.createObjectURL(event.target.files[0]))
         }   
