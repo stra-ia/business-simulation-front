@@ -13,6 +13,8 @@ export default function ChatboxFooter({ addMessage } : ChatboxFooterProps ) {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [file, setFile] = useState<any[]>([])
     const [previewFile, setPreviewFile] = useState('')
+    const [showUploadButton, setShowUploadButton] = useState(false)
+
     const handleChangeMessage = ( e: ChangeEvent<HTMLInputElement> ) => {
             setMessage(e.target.value)
     }
@@ -89,15 +91,63 @@ export default function ChatboxFooter({ addMessage } : ChatboxFooterProps ) {
 
     return (
         <div className={style.footer}>
+            {
+                showUploadButton && 
+                <div className={style.fileContainer}>
+                    <div
+                        className={style.form__files}
+                        onDragOver={(event: React.DragEvent<HTMLDivElement>) => {
+                            event.preventDefault();
+                        }}
+                        onDrop={(event: React.DragEvent<HTMLDivElement>) => {
+                            event.preventDefault();
+                            if (
+                                event.dataTransfer &&
+                                event.dataTransfer.files &&
+                                event.dataTransfer.files.length > 0
+                            ) {
+                                // handleDropAvatar(event.dataTransfer.files);
+                            }
+                        }}
+                        onClick={event => {
+                            if (fileInputRef.current) {
+                                fileInputRef.current.click();
+                            }
+                        }}
+                        draggable={true}
+                    >   
+                        <Image
+                            priority
+                            src='/upload.svg'
+                            height={20}
+                            width={30}
+                            className={style.iconUpload }
+                            alt="Upload image"
+                        />
+                        <h3>
+                            Drag and dop file XLS or PDF here
+                        </h3>
+                        <h3>or</h3>
+                        <button className={style.uploadButton}>
+                            <p>Browse file</p>
+                        </button>
+                        <input 
+                            type="file" 
+                            onChange={handleChangeFile}
+                            ref={fileInputRef} 
+                            hidden
+                        />
+                    </div>
+                </div>
+            }
+            <div className={style.footerButtons}>
             <button 
                 className={style.button} 
                 name='attach' 
                 type='button'
-                onClick={event => {
-                    if (fileInputRef.current) {
-                      fileInputRef.current.click();
-                    }
-                }}
+                onClick={
+                    () => setShowUploadButton(!showUploadButton)
+                }
             >        
                 <Image
                     priority
@@ -108,12 +158,7 @@ export default function ChatboxFooter({ addMessage } : ChatboxFooterProps ) {
                     className={style.iconFooter }
                 />
             </button>
-            <input 
-                type="file" 
-                hidden
-                onChange={handleChangeFile}
-                ref={fileInputRef} 
-            />
+            
             <input 
                 className={style.input} 
                 placeholder='Write something...' 
@@ -148,6 +193,7 @@ export default function ChatboxFooter({ addMessage } : ChatboxFooterProps ) {
                     className={style.iconFooter }
                 />
             </button>
+            </div>
         </div>
     )
 }
