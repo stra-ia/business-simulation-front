@@ -93,6 +93,7 @@ export default function ChatboxFooter({ addMessage } : ChatboxFooterProps ) {
                 console.log('not valid format')
                 return;
             }
+            setShowUploadButton(!showUploadButton)
             setFile([event.target.files[0]])
             console.log(event.target.files[0],'file')
             setPreviewFile(URL.createObjectURL(event.target.files[0]))
@@ -107,6 +108,7 @@ export default function ChatboxFooter({ addMessage } : ChatboxFooterProps ) {
                 console.log('not valid format')
                 return;
             }
+            setShowUploadButton(!showUploadButton)
             const fileList: any = selectedFile[0];
             setFile(fileList);
             setPreviewFile(URL.createObjectURL(fileList))
