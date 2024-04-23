@@ -9,14 +9,19 @@ export enum AreaType  {
     SALES = 'sales'
 }
 
+export interface fileType {
+    fileData: any,
+    fileType: string,
+}
+
 export interface Messages {
     role: authorType,
     message: string,
-    image?: string,
+    file?: fileType,
     date: string | Date
 }
 
 export type HandleAdd = (
     message: Messages,
-    image?: any
+    file?: any
 ) => void;

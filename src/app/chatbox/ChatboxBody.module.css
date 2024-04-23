@@ -5,7 +5,7 @@
     max-height: 100%;
     overflow-x: hidden !important;
     overflow-y: auto !important;
-    scrollbar-width: none;/*fancy width*/
+    scrollbar-width: none;
     /* scrollbar-color: #f3f0dd #154734; */
     scrollbar-color: #a1a1a1 transparent !important;
     height: 100%;
@@ -141,9 +141,8 @@
     text-align: left;
 }
 
-.imageByMe {
+.fileByMe {
     width: fit-content;
-    height: auto;
     padding: 8px 8px 8px 8px;
     gap: 16px;
     border-radius: 16px;
@@ -158,8 +157,20 @@
     line-height: 10px;
     letter-spacing: 0.0075em;
     text-align: left;
+
+    width: 320px;
+    height: 340px;
+    overflow: none !important;
+    scrollbar-width: none;
 }
 
-.image {
+.file {
     border-radius: 12px;
+    padding: 2px;
+    border:none;
+    overflow:none !important;
+    margin:0;
+    width: 305px;
+    height: 320px;
+    scrollbar-width: none;
 }

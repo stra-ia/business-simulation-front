@@ -85,16 +85,40 @@ export default function ChatboxBody( {messages, type} : ChatboxBodyProps ) {
                                             {item.message}
                                         </div>
                                         {
-                                            item.image && 
-                                            <div key={i} className={ style.imageByMe }>
-                                                <Image
+                                            (item.file && item.file.fileData)  && 
+                                            <div key={i} className={ style.fileByMe }>
+                                                {/* <Image
                                                     priority
-                                                    src={item.image}
+                                                    src={item.file.fileData}
                                                     alt="Image"
                                                     width={200}
                                                     height={200}
-                                                    className={style.image}
-                                                />
+                                                    className={style.file}
+                                                /> */}
+                                                {/* <object 
+                                                    className={style.file} 
+                                                    data={item.file.fileData} 
+                                                    type="application/pdf"
+                                                    width="300px"
+                                                    height="350px"
+                                                >
+                                                    <embed width='200px' height="300px" src={item.file.fileData} type="application/pdf" />
+                                                </object> */}
+                                                
+                                                <iframe 
+                                                    style={{"overflow":"hidden;"}}
+                                                    className={style.file}
+                                                    src={`${item.file.fileData}`}
+                                                    
+                                                >    
+                                                </iframe>
+                                                {/* <embed 
+                                                    className={style.file}
+                                                    src={`${item.file.fileData}`}
+                                                    width={200}
+                                                    height={300} 
+                                                        type="application/pdf">
+                                                </embed> */}
                                             </div>
                                         }
                                     </>

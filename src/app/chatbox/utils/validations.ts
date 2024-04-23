@@ -11,3 +11,21 @@ export const validateImageFile = (files: FileList): boolean => {
   
     return true
 }
+
+export const validateDocFile = (files: FileList): boolean => {
+  const fileList: File[] = Array.from(files)
+  const allowedExtensions: string[] = [".pdf", ".xlsx", ".docx"]
+  const hasInvalidExtension: boolean = fileList.some((file: File) => {
+    const fileName: string = file.name
+    const fileExtension: string = fileName
+      .substring(fileName.lastIndexOf("."))
+      .toLowerCase()
+    return !allowedExtensions.includes(fileExtension)
+  })
+  console.log(hasInvalidExtension,'esto??')
+  if (hasInvalidExtension) {
+    return false
+  }
+
+  return true
+}
