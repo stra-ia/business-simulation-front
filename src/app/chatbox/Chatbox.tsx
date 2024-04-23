@@ -15,7 +15,7 @@ const defaultBotMessage = {
 }
 
 interface ChatBoxProps {
-    type: AreaType
+    type?: AreaType
 }
 
 export default function Chatbox({ type = AreaType.MARKETING } : ChatBoxProps) {
