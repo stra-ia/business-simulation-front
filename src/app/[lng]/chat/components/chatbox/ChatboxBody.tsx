@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useMemo, useRef } from 'react'
+import React, { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react'
 import style from './ChatboxBody.module.css'
 import { AreaType, Messages, authorType } from './utils/enums';
 import Image from 'next/image';
@@ -19,8 +19,6 @@ export default function ChatboxBody( {messages, type, handleChangeFile} : Chatbo
     useEffect(() => {},[messages])
     useEffect(() => {
         bodyRef.current?.lastElementChild?.scrollIntoView()
-        if( messages.length > 1 )
-        console.log(messages[1].file?.fileData.name,'messages')
     }, [messages]);
     
 
@@ -37,6 +35,11 @@ export default function ChatboxBody( {messages, type, handleChangeFile} : Chatbo
             groups[formattedDate].push([message]);
             return groups
         }, {});
+    }
+
+    const isSameGroup = ( current: authorType, previous: authorType  ) => {
+        console.log(current, previous,'ojo')
+        return current == previous ? true : false;
     }
 
     const groups = useMemo(
@@ -67,28 +70,35 @@ export default function ChatboxBody( {messages, type, handleChangeFile} : Chatbo
                             messagesGroups.length > 0 && messages.map(( item, i ) => (
                                 <>
                                 {
+                                    /// model bubble [start] ///
                                     item.role == authorType.BOT &&
-                                    <div key={i} className={style.messageContainer}>
-                                    
-                                        <div className={style.iconContainer}>
-                                            <Image
-                                                priority
-                                                src='/robot.svg'
-                                                alt="Vercel Logo"
-                                                width={100}
-                                                height={24}
-                                                className={style.iconRobot }
-                                            />
-                                        </div>
-                                        <div key={i} className={ style.messageForMe }>
-                                            <Markdown>{item.message}</Markdown>
-                                        </div>
+                                    <div 
+                                        key={i} 
+                                        className={`${style.messageContainer} 
+                                        ${ isSameGroup(item.role, messages[i-1]?.role) ? style.sameGroup : ''  }`}>
+                                            <div className={style.iconContainer}>
+                                                <Image
+                                                    priority
+                                                    src='/robot.svg'
+                                                    alt="robot icon"
+                                                    width={100}
+                                                    height={24}
+                                                    className={style.iconRobot }
+                                                />
+                                            </div>
+                                            <div key={i} className={ style.messageForMe }>
+                                                <Markdown>{item.message}</Markdown>
+                                            </div>
                                     </div>
+                                    /// model bubble [end] ///
                                 }
                                 {
+                                    /// user bubble [start] ///
                                     (item.role == authorType.USER && !item.error ) &&
                                     <>
-                                        <div key={i} className={ style.messageByMe }>
+                                        <div  key={i} 
+                                              className={`${style.messageByMe }
+                                              ${ isSameGroup(item.role, messages[i-1]?.role) ? style.sameGroup : ''  }`}>
                                             {item.message}
                                         </div>
                                         {
@@ -111,12 +121,15 @@ export default function ChatboxBody( {messages, type, handleChangeFile} : Chatbo
                                             </div>
                                         }
                                     </>
+                                    /// user bubble [end] ///
                                 }
                                 {
+                                    /// file error bubble [start] ///
                                     item.error &&
                                     <div key={i} className={ style.errorFile }>
                                         <FileError handleChangeFile={handleChangeFile} />
                                     </div>
+                                    /// file error bubble [end] ///
                                 }
                                 </>
                             )) 

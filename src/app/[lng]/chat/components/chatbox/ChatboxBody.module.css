@@ -215,3 +215,7 @@
   letter-spacing: 0.0075em;
   text-align: left;
 }
+
+.sameGroup {
+  margin-top: -5px;
+}
