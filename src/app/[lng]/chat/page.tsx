@@ -76,12 +76,12 @@ export default function Page() {
     const material1 = new THREE.MeshBasicMaterial({
       color: 0xff6347,
       transparent: true,
-      opacity: 0,
+      opacity: 0.5,
     });
     const material2 = new THREE.MeshBasicMaterial({
       color: 0x4682b4,
       transparent: true,
-      opacity: 0,
+      opacity: 0.5,
     });
 
     // Crear dos círculos
@@ -99,8 +99,8 @@ export default function Page() {
     // Cámara
     camera.position.z = 2;
     let angle = 0;
-    const radius = 4; // Radio del movimiento circular
-    const radius2 = 8; // Radio del movimiento circular
+    const radius = 10; // Radio del movimiento circular
+    const radius2 = 5; // Radio del movimiento circular
 
     // Función de animación
     const animate = function () {
@@ -110,7 +110,7 @@ export default function Page() {
       circle1.position.x = radius * Math.cos(angle);
       circle1.position.y = radius * Math.sin(angle);
 
-      circle2.position.x = radius * Math.cos(angle + Math.PI); // Desfase de 180 grados
+      circle2.position.x = radius2 * Math.cos(angle + Math.PI); // Desfase de 180 grados
       circle2.position.y = radius2 * Math.sin(angle + Math.PI);
 
       angle += 0.002; // Velocidad del movimiento circular
@@ -120,7 +120,17 @@ export default function Page() {
 
     // Iniciar animación
     animate();
+    const onWindowResize = () => {
+      // Establecer el nuevo tamaño para el renderizador
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      // Actualizar la relación de aspecto de la cámara
+      camera.aspect = window.innerWidth / window.innerHeight;
+      // Actualizar la matriz de proyección de la cámara
+      camera.updateProjectionMatrix();
+    };
 
+    // Agregar el manejador de evento de redimensionamiento
+    window.addEventListener("resize", onWindowResize);
     // Limpieza al desmontar el componente
     return () => {
       mountRef.current?.removeChild(renderer.domElement);

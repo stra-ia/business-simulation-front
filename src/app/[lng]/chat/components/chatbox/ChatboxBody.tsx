@@ -3,6 +3,8 @@ import style from "./ChatboxBody.module.css";
 import { AreaType, Messages, authorType } from "./utils/enums";
 import Image from "next/image";
 import Markdown from "react-markdown";
+import { useParams } from "next/navigation";
+import { useTranslation } from "@/app/i18n/client";
 
 interface ChatboxBodyProps {
   messages: Messages[];
@@ -10,6 +12,8 @@ interface ChatboxBodyProps {
 }
 
 export default function ChatboxBody({ messages, type }: ChatboxBodyProps) {
+  const { lng } = useParams();
+  const { t } = useTranslation(lng, "chatbox");
   const bodyRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     //3️⃣ bring the last item into view
@@ -44,10 +48,7 @@ export default function ChatboxBody({ messages, type }: ChatboxBodyProps) {
     <>
       {type == AreaType.MARKETING && (
         <div className={style.briefDisclaimer}>
-          <span>
-            Definiendo Brief. Puedes iniciar la conversación para construir tu
-            campaña.
-          </span>
+          <span>{t("chatbox.messageWelcome")}</span>
         </div>
       )}
       <hr className={style.hr} />
