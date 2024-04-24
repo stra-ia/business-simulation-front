@@ -1,69 +1,67 @@
-.main { 
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    border-radius: 20px;
-    background: #0e0e26;
-    width: 723px;
-    height: 820px;
-    padding: 24px;
-    gap: 0px;
-    border-radius: 20px;
-    justify-content: space-between;
-    opacity: 0px;
-    border: 0.5px solid #8C8C8C
-
+.main {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border-radius: 20px;
+  background: #0e0e26;
+  width: 723px;
+  height: 820px;
+  padding: 24px;
+  gap: 0px;
+  border-radius: 20px;
+  justify-content: space-between;
+  opacity: 0px;
+  border: 0.5px solid #8c8c8c;
 }
 
 .chatBotHeader {
-    width: Fill (675px)px;
-    height: Hug (92px)px;
-    padding: 15px 60px 15px 60px;
-    gap: 16px;
-    border-radius: 18px;
-    opacity: 0px;
-    background-color: #0A08934D;
-    margin-bottom: 15px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
+  width: Fill (675px) px;
+  height: Hug (92px) px;
+  padding: 15px 60px 15px 60px;
+  gap: 16px;
+  border-radius: 18px;
+  opacity: 0px;
+  background-color: #0a08934d;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 
-.chatBotHeader p{
-    color: #FFFFFF;
-    font-family: Poppins;
-    font-size: 40px;
-    font-weight: 400;
-    line-height: 44px;
-    letter-spacing: 0.01em;
-    text-align: center;
+.chatBotHeader p {
+  color: #ffffff;
+
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 44px;
+  letter-spacing: 0.01em;
+  text-align: center;
 }
 
 .chatBotHeader p > span {
-    font-family: Poppins;
-    font-size: 40px;
-    font-weight: 600;
-    line-height: 44px;
-    letter-spacing: 0.01em;
-    text-align: left;
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 44px;
+  letter-spacing: 0.01em;
+  text-align: left;
 }
 
 .chatBotHeaderIconContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
 }
 
-.chatBotHeaderTextContainer{
-    display: flex;
-    flex-direction: column;
+.chatBotHeaderTextContainer {
+  display: flex;
+  flex-direction: column;
 }
 
 .chatBotBody {
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
 }
