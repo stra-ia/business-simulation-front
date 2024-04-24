@@ -174,3 +174,21 @@
     height: 320px;
     scrollbar-width: none;
 }
+
+.errorFile {
+    width: fit-content;
+    height: auto;
+    padding: 8px 16px 8px 16px;
+    gap: 16px;
+    border-radius: 16px;
+    opacity: 0px;
+    margin: 15px 0px;
+    color: #EFEFEF;
+    align-self: flex-end;
+    font-family: Poppins;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0.0075em;
+    text-align: left;
+}

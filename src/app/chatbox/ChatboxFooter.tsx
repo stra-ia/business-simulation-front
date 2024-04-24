@@ -1,20 +1,35 @@
 import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react'
 import style from './ChatboxFooter.module.css'
-import { HandleAdd, authorType, fileType } from './utils/enums';
+import { HandleAdd, Messages, authorType, fileType } from './utils/enums';
 import Image from 'next/image';
 import { validateDocFile, validateImageFile } from './utils/validations';
+
 interface ChatboxFooterProps {
     addMessage: HandleAdd,
+    handleChangeFile: any,
+    handleDropFile: any,
+    previewFile: any,
+    setPreviewFile: any,
+    fileExtension : any,
+    setFileExtension: any,
+    showUploadButton: any,
+    setShowUploadButton: any
 }
 
-export default function ChatboxFooter({ addMessage } : ChatboxFooterProps ) {
+export default function ChatboxFooter({ 
+    addMessage, 
+    handleChangeFile, 
+    handleDropFile, 
+    previewFile, 
+    setPreviewFile,
+    fileExtension,
+    setFileExtension,
+    showUploadButton,
+    setShowUploadButton
+} : ChatboxFooterProps ) {
 
     const [message, setMessage] = useState('');
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const [file, setFile] = useState<any[]>([])
-    const [fileExtension, setFileExtension] = useState('')
-    const [previewFile, setPreviewFile] = useState('')
-    const [showUploadButton, setShowUploadButton] = useState(false)
 
     const handleChangeMessage = ( e: ChangeEvent<HTMLInputElement> ) => {
             setMessage(e.target.value)
@@ -44,9 +59,10 @@ export default function ChatboxFooter({ addMessage } : ChatboxFooterProps ) {
             return;
         }
         if( !previewFile ) {
-            let newMessage = {
+            let newMessage : Messages = {
                 role: authorType.USER,
                 message: message,
+                error: false,
                 date: new Date(),
             }
             addMessage(newMessage)
@@ -63,6 +79,7 @@ export default function ChatboxFooter({ addMessage } : ChatboxFooterProps ) {
                     fileData:previewFile,
                     fileType: fileExtension
                 },
+                error: false,
                 date: new Date()
         }
         console.log(newMessage,'newMessage')
@@ -74,52 +91,15 @@ export default function ChatboxFooter({ addMessage } : ChatboxFooterProps ) {
        }
     }
 
-    const getFileExtension = ( name : string) => {
-        return name
-        .substring(name.lastIndexOf("."))
-        .replace('.','')
-        .toLowerCase()
-    }
-
     const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             handleCreateMessage()
         }
     };
   
-    const handleChangeFile = (event: ChangeEvent<HTMLInputElement>) => { 
-        if( event.target.files != undefined && event.target.files?.length > 0 ){
-            if (!validateDocFile(event.target.files)) {
-                console.log('not valid format')
-                return;
-            }
-            setShowUploadButton(!showUploadButton)
-            setFile([event.target.files[0]])
-            console.log(event.target.files[0],'file')
-            setPreviewFile(URL.createObjectURL(event.target.files[0]))
-            let filetype = getFileExtension(event.target.files[0].name)
-            setFileExtension(filetype)
-        }   
-    }
-
-    const handleDropFile = (selectedFile: FileList) => {
-        if (selectedFile && selectedFile.length > 0) {
-            if (!validateDocFile(selectedFile)) {
-                console.log('not valid format')
-                return;
-            }
-            setShowUploadButton(!showUploadButton)
-            const fileList: any = selectedFile[0];
-            setFile(fileList);
-            setPreviewFile(URL.createObjectURL(fileList))
-            let filetype = getFileExtension(fileList.name)
-            setFileExtension(filetype)
-        }
-    }
-
 
     useEffect(() => {
-    },[file])
+    },[fileExtension])
 
 
     return (

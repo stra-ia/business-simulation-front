@@ -1,16 +1,17 @@
 "use client";
-import React, { useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import style from './Chatbox.module.css'
 import ChatboxBody from './ChatboxBody'
 import ChatboxFooter from './ChatboxFooter';
 import { AreaType, Messages, authorType } from './utils/enums';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import Image from 'next/image';
+import { validateDocFile } from './utils/validations';
 
-const defaultBotMessage = {
+const defaultBotMessage : Messages = {
     role: authorType.BOT,
     message: '¡Hola! ¿como puedo ayudarte?',
-    image: '',
+    error: false,
     date: new Date(),
 }
 
@@ -24,11 +25,18 @@ export default function Chatbox({ type = AreaType.MARKETING } : ChatBoxProps) {
     const genAI = new GoogleGenerativeAI('AIzaSyAszMvafUVl4PJq0XNAm6obfCAe3KF13t4');
     const modelTextOnly = genAI.getGenerativeModel({ model: "gemini-pro" });
     const modelMultimedia = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
+    const [file, setFile] = useState<any[]>([])
+    const [fileExtension, setFileExtension] = useState('')
+    const [previewFile, setPreviewFile] = useState('')
+    const [showUploadButton, setShowUploadButton] = useState(false)
 
     const handleAddMessage = async( message: Messages, image: any = null ) => {
         let arr = messages;
         arr.push(message)
         setMessages([...arr])
+
+        if( message.error ) return;
+
         if( image ){
             await handleSendMultimedia(message.message, image)
         }else{
@@ -42,9 +50,10 @@ export default function Chatbox({ type = AreaType.MARKETING } : ChatBoxProps) {
 
         let text = '';
         let arr = messages;
-        let newMessage = {
+        let newMessage : Messages = {
             role: authorType.BOT,
             message: '',
+            error: false,
             date: new Date()
         }
         arr.push(newMessage)
@@ -62,9 +71,10 @@ export default function Chatbox({ type = AreaType.MARKETING } : ChatBoxProps) {
 
         let text = '';
         let arr = messages;
-        let newMessage = {
+        let newMessage : Messages = {
             role: authorType.BOT,
             message: '',
+            error: false,
             date: new Date()
         }
 
@@ -76,6 +86,54 @@ export default function Chatbox({ type = AreaType.MARKETING } : ChatBoxProps) {
             text += chunkText;
             arr[arr.length-1].message = text;
             setMessages([...arr])
+        }
+    }
+
+    const getFileExtension = ( name : string) => {
+        return name
+        .substring(name.lastIndexOf("."))
+        .replace('.','')
+        .toLowerCase()
+    }
+
+    const handleErrorFile = () => {
+        let newMessage : Messages = {
+            role: authorType.USER,
+            message: '',
+            error: true,
+            date: new Date(),
+        }
+        handleAddMessage(newMessage)
+        console.log('creando error')
+    }
+  
+    const handleChangeFile = (event: ChangeEvent<HTMLInputElement>) => { 
+        if( event.target.files != undefined && event.target.files?.length > 0 ){
+            if (!validateDocFile(event.target.files)) {
+                handleErrorFile()
+                return;
+            }
+            setShowUploadButton(!showUploadButton)
+            setFile([event.target.files[0]])
+            console.log(event.target.files[0],'file')
+            setPreviewFile(URL.createObjectURL(event.target.files[0]))
+            let filetype = getFileExtension(event.target.files[0].name)
+            setFileExtension(filetype)
+        }   
+    }
+
+    const handleDropFile = (selectedFile: FileList) => {
+        if (selectedFile && selectedFile.length > 0) {
+            if (!validateDocFile(selectedFile)) {
+                handleErrorFile()
+                return;
+            }
+            setShowUploadButton(!showUploadButton)
+            const fileList: any = selectedFile[0];
+            setFile(fileList);
+            setPreviewFile(URL.createObjectURL(fileList))
+            let filetype = getFileExtension(fileList.name)
+            setFileExtension(filetype)
         }
     }
 
@@ -106,8 +164,23 @@ export default function Chatbox({ type = AreaType.MARKETING } : ChatBoxProps) {
                     <p>Chat<span>Bot</span></p>
                 </div>
             </div>
-            <ChatboxBody type={type} messages={messages} />
-            <ChatboxFooter addMessage={ handleAddMessage } />
+            <ChatboxBody 
+                type={type} 
+                messages={messages}
+                handleChangeFile={handleChangeFile} 
+            />
+            <ChatboxFooter 
+                addMessage={ handleAddMessage }
+                handleChangeFile={ handleChangeFile }
+                handleDropFile={ handleDropFile }
+                previewFile={ previewFile }
+                setPreviewFile={ setPreviewFile }
+                fileExtension={ fileExtension }
+                setFileExtension={ setFileExtension }
+                showUploadButton={ showUploadButton }
+                setShowUploadButton={ setShowUploadButton }
+            />
+                
         </div>
     )
 }

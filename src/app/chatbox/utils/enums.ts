@@ -18,6 +18,7 @@ export interface Messages {
     role: authorType,
     message: string,
     file?: fileType,
+    error: boolean,
     date: string | Date
 }
 

@@ -1,21 +1,23 @@
-import React, { useEffect, useMemo, useRef } from 'react'
+import React, { ChangeEvent, useEffect, useMemo, useRef } from 'react'
 import style from './ChatboxBody.module.css'
 import { AreaType, Messages, authorType } from './utils/enums';
 import Image from 'next/image';
 import Markdown from 'react-markdown';
+import FileError from './FileError';
 
 interface ChatboxBodyProps {
     messages: Messages[];
-    type: AreaType
+    type: AreaType;
+    handleChangeFile: (event: ChangeEvent<HTMLInputElement>) => void
 }
 
-export default function ChatboxBody( {messages, type} : ChatboxBodyProps ) {
+export default function ChatboxBody( {messages, type, handleChangeFile} : ChatboxBodyProps ) {
 
     const bodyRef = useRef<HTMLDivElement>(null);
     useEffect(() => {},[])
     useEffect(() => {},[messages])
     useEffect(() => {
-        //3️⃣ bring the last item into view        
+
         bodyRef.current?.lastElementChild?.scrollIntoView()
     }, [messages]);
     
@@ -39,6 +41,7 @@ export default function ChatboxBody( {messages, type} : ChatboxBodyProps ) {
         () => Object.entries(groupMessagesByDateAndSender(messages)),
     [messages],
     );
+    
 
     return (
         <>
@@ -62,7 +65,7 @@ export default function ChatboxBody( {messages, type} : ChatboxBodyProps ) {
                             messagesGroups.length > 0 && messages.map(( item, i ) => (
                                 <>
                                 {
-                                    item.role == authorType.BOT ?
+                                    item.role == authorType.BOT &&
                                     <div key={i} className={style.messageContainer}>
                                     
                                         <div className={style.iconContainer}>
@@ -79,7 +82,9 @@ export default function ChatboxBody( {messages, type} : ChatboxBodyProps ) {
                                             <Markdown>{item.message}</Markdown>
                                         </div>
                                     </div>
-                                    :
+                                }
+                                {
+                                    (item.role == authorType.USER && !item.error ) &&
                                     <>
                                         <div key={i} className={ style.messageByMe }>
                                             {item.message}
@@ -122,6 +127,12 @@ export default function ChatboxBody( {messages, type} : ChatboxBodyProps ) {
                                             </div>
                                         }
                                     </>
+                                }
+                                {
+                                    item.error &&
+                                    <div key={i} className={ style.errorFile }>
+                                        <FileError handleChangeFile={handleChangeFile} />
+                                    </div>
                                 }
                                 </>
                             )) 
