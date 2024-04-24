@@ -164,6 +164,29 @@
   scrollbar-width: none;
 }
 
+.fileByMe {
+  width: fit-content;
+  padding: 8px 8px 8px 8px;
+  gap: 16px;
+  border-radius: 16px;
+  opacity: 0px;
+  background: #0A089380;
+  margin: 15px 0px;
+  color: #EFEFEF;
+  align-self: flex-end;
+  font-family: Poppins;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 10px;
+  letter-spacing: 0.0075em;
+  text-align: center;
+
+  width: 320px;
+  height: 340px;
+  overflow: none !important;
+  scrollbar-width: none;
+}
+
 .file {
   border-radius: 12px;
   padding: 2px;

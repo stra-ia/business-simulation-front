@@ -8,6 +8,8 @@ interface ChatboxFooterProps {
     addMessage: HandleAdd,
     handleChangeFile: any,
     handleDropFile: any,
+    fileData: any,
+    setFile: any,
     previewFile: any,
     setPreviewFile: any,
     fileExtension : any,
@@ -25,7 +27,9 @@ export default function ChatboxFooter({
     fileExtension,
     setFileExtension,
     showUploadButton,
-    setShowUploadButton
+    setShowUploadButton,
+    fileData,
+    setFile
 } : ChatboxFooterProps ) {
 
     const [message, setMessage] = useState('');
@@ -72,11 +76,12 @@ export default function ChatboxFooter({
         // const imageParts = await Promise.all(
         //     file.map(fileToGenerativePart)
         //   );
-            let newMessage = {
+            let newMessage : Messages = {
                 role: authorType.USER,
                 message: message,
                 file: {
-                    fileData:previewFile,
+                    fileURL: previewFile,
+                    fileData: fileData[0],
                     fileType: fileExtension
                 },
                 error: false,
@@ -88,6 +93,7 @@ export default function ChatboxFooter({
         setMessage('')
         setPreviewFile('')
         setFileExtension('')
+        setFile([])
        }
     }
 

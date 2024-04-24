@@ -18,8 +18,9 @@ export default function ChatboxBody( {messages, type, handleChangeFile} : Chatbo
     useEffect(() => {},[])
     useEffect(() => {},[messages])
     useEffect(() => {
-
         bodyRef.current?.lastElementChild?.scrollIntoView()
+        if( messages.length > 1 )
+        console.log(messages[1].file?.fileData.name,'messages')
     }, [messages]);
     
 
@@ -91,40 +92,22 @@ export default function ChatboxBody( {messages, type, handleChangeFile} : Chatbo
                                             {item.message}
                                         </div>
                                         {
-                                            (item.file && item.file.fileData)  && 
-                                            <div key={i} className={ style.fileByMe }>
-                                                {/* <Image
-                                                    priority
-                                                    src={item.file.fileData}
-                                                    alt="Image"
-                                                    width={200}
-                                                    height={200}
-                                                    className={style.file}
-                                                /> */}
-                                                {/* <object 
-                                                    className={style.file} 
-                                                    data={item.file.fileData} 
-                                                    type="application/pdf"
-                                                    width="300px"
-                                                    height="350px"
-                                                >
-                                                    <embed width='200px' height="300px" src={item.file.fileData} type="application/pdf" />
-                                                </object> */}
-                                                
-                                                <iframe 
-                                                    style={{"overflow":"hidden;"}}
-                                                    className={style.file}
-                                                    src={`${item.file.fileData}`}
-                                                    
-                                                >    
-                                                </iframe>
-                                                {/* <embed 
-                                                    className={style.file}
-                                                    src={`${item.file.fileData}`}
-                                                    width={200}
-                                                    height={300} 
-                                                        type="application/pdf">
-                                                </embed> */}
+                                            (item.file && item.file.fileData && item.file.fileType == 'pdf')  && 
+                                                <div key={i} className={ style.fileByMe }>
+                                                    <iframe 
+                                                        style={{"overflow":"hidden;"}}
+                                                        className={style.file}
+                                                        src={`${item.file.fileURL}`}
+                                                    >    
+                                                    </iframe>        
+                                                </div>
+                                        }
+                                        {
+                                            (item.file && item.file.fileData && item.file.fileType != 'pdf' ) && 
+                                            <div key={i} className={ style.fileByMe}>
+                                                {
+                                                    item.file?.fileData.name
+                                                }             
                                             </div>
                                         }
                                     </>

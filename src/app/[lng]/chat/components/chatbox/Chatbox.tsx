@@ -113,8 +113,14 @@ export default function Chatbox({ type = AreaType.MARKETING } : ChatBoxProps) {
             if (!validateDocFile(event.target.files)) {
                 handleErrorFile()
                 return;
+            }else{
+                let errorIndex = messages.find(( item ) => item.error == true )
+                if ( errorIndex != undefined ){
+                    let arr = messages.filter(( item ) => !item.error )
+                    setMessages([...arr])
+                }
             }
-            setShowUploadButton(!showUploadButton)
+            if(showUploadButton) setShowUploadButton(!showUploadButton)
             setFile([event.target.files[0]])
             console.log(event.target.files[0],'file')
             setPreviewFile(URL.createObjectURL(event.target.files[0]))
@@ -129,7 +135,7 @@ export default function Chatbox({ type = AreaType.MARKETING } : ChatBoxProps) {
                 handleErrorFile()
                 return;
             }
-            setShowUploadButton(!showUploadButton)
+            if(showUploadButton) setShowUploadButton(!showUploadButton)
             const fileList: any = selectedFile[0];
             setFile(fileList);
             setPreviewFile(URL.createObjectURL(fileList))
@@ -180,6 +186,8 @@ export default function Chatbox({ type = AreaType.MARKETING } : ChatBoxProps) {
                 setFileExtension={ setFileExtension }
                 showUploadButton={ showUploadButton }
                 setShowUploadButton={ setShowUploadButton }
+                fileData={ file }
+                setFile={ setFile }
             />
                 
         </div>

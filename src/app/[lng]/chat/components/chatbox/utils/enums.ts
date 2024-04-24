@@ -10,6 +10,7 @@ export enum AreaType  {
 }
 
 export interface fileType {
+    fileURL: string,
     fileData: any,
     fileType: string,
 }
