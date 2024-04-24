@@ -3,64 +3,31 @@ import React, { useEffect, useState } from 'react'
 import style from './BriefCard.module.css'
 import Image from 'next/image';
 
-export default function BriefCard() {
+interface itemCard {
+    isDone: boolean,
+    title: string,
+    desc: string
+}
 
-    const themes = [
-        {
-            isDone: true,
-            title: 'Objetivos',
-            desc: 'Define metas claras y medibles que el equipo'
-        },
-        {
-            isDone: false,
-            title: 'Producto/Servicio',
-            desc: 'Breve descripción y ventajas.'
-        },
-        {
-            isDone: false,
-            title: 'Mercado Objetivo',
-            desc: 'Perfil del cliente y necesidades.'
-        },
-        {
-            isDone: false,
-            title: 'Estrategias',
-            desc: 'Principales métodos de venta.'
-        },
-        {
-            isDone: false,
-            title: 'Herramientas',
-            desc: 'Recursos disponibles para el equipo.'
-        },
-        {
-            isDone: false,
-            title: 'KPIs',
-            desc: 'Indicadores clave de rendimiento.'
-        },
-    ]
+export default function BriefCard( item : itemCard ) {
+    const {  isDone, title, desc } = item;
 
     return (
-        <div className={style.cardsContainer}>
-            {
-                themes.length && themes.map(( item, index ) => (
-                    <div key={index} className={style.card} >
-                        <div className={style.cardIconContainer}>
-                            <Image
-                                className={ item.isDone ? `${style.cardIconDone}` : `${style.cardIcon}`}
-                                priority
-                                src={ item.isDone ? '/checkGreen.svg' : '/checkDefault.svg'}
-                                alt="Check icon"
-                                height={24}
-                                width={50}
-                            />
-                        </div>
-                        <div className={style.cardDetailsContainer}>
-                            <p className={item.isDone ? `${style.cardTitleDone}` : `${style.cardTitle}`}>{item.title}</p>
-                            <p className={ item.isDone ?  `${style.cardDescriptionDone}` : `${style.cardDescription}`}>{item.desc}</p>
-                        </div> 
-                    </div>
-                ))
-            }
-            
+        <div className={style.card} >
+            <div className={style.cardIconContainer}>
+                <Image
+                    priority
+                    className={ isDone ? `${style.cardIconDone}` : `${style.cardIcon}`}
+                    src={ isDone ? '/checkGreen.svg' : '/checkDefault.svg'}
+                    alt="Check icon"
+                    height={24}
+                    width={50}
+                />
+            </div>
+            <div className={style.cardDetailsContainer}>
+                <p className={ isDone ? `${style.cardTitleDone}` : `${style.cardTitle}`}>{title}</p>
+                <p className={ isDone ?  `${style.cardDescriptionDone}` : `${style.cardDescription}`}>{desc}</p>
+            </div> 
         </div>
-    )
+)
 }

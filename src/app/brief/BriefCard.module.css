@@ -1,12 +1,4 @@
-.cardsContainer{
-    display: flex;
-    flex-direction: column;
 
-    width: Fill (468px)px;
-    height: Hug (584px)px;
-    gap: 16px;
-    opacity: 0px;
-}
 
 .card {
     display: flex;
