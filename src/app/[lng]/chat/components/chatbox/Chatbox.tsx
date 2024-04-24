@@ -2,11 +2,11 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import style from './Chatbox.module.css'
 import ChatboxBody from './ChatboxBody'
-import ChatboxFooter from './ChatboxFooter';
 import { AreaType, Messages, authorType } from './utils/enums';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import Image from 'next/image';
 import { validateDocFile } from './utils/validations';
+import ChatboxFooter from './ChatboxFooter';
 
 const defaultBotMessage : Messages = {
     role: authorType.BOT,
@@ -97,6 +97,7 @@ export default function Chatbox({ type = AreaType.MARKETING } : ChatBoxProps) {
     }
 
     const handleErrorFile = () => {
+        setShowUploadButton(!showUploadButton)
         let newMessage : Messages = {
             role: authorType.USER,
             message: '',
@@ -169,7 +170,7 @@ export default function Chatbox({ type = AreaType.MARKETING } : ChatBoxProps) {
                 messages={messages}
                 handleChangeFile={handleChangeFile} 
             />
-            <ChatboxFooter 
+            <ChatboxFooter
                 addMessage={ handleAddMessage }
                 handleChangeFile={ handleChangeFile }
                 handleDropFile={ handleDropFile }

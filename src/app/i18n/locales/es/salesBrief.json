@@ -1,0 +1,31 @@
+{
+  "SalesBriefs": {
+    "goals": {
+      "title": "Objetivos",
+      "description": "Definir objetivos claros y plazos."
+    },
+    "productOrService": {
+      "title": "Producto/Servicio",
+      "description": "Descripción breve y ventajas."
+    },
+    "targetMarket": {
+      "title": "Mercado Objetivo",
+      "description": "Perfil del cliente y necesidades."
+    },
+    "strategy": {
+      "title": "Estrategia",
+      "description": "Principales métodos de venta."
+    },
+    "toole": {
+      "title": "Herramientas",
+      "description": "Recursos disponibles para el equipo."
+    },
+    "kpis": {
+      "title": "KPIs",
+      "description": "Indicadores clave de rendimiento."
+    }
+  },
+  "buttons": {
+    "closeCampaign": "Cerrar campaña"
+  }
+}

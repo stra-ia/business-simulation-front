@@ -1,0 +1,31 @@
+{
+  "SalesBriefs": {
+    "goals": {
+      "title": "Goals",
+      "description": "Define clear goals and deadlines."
+    },
+    "productOrService": {
+      "title": "Producto/Servicio",
+      "description": "Brief description and advantages."
+    },
+    "targetMarket": {
+      "title": "Target Market",
+      "description": "Client profile and needs."
+    },
+    "strategy": {
+      "title": "Strategy",
+      "description": "Main sales methods."
+    },
+    "toole": {
+      "title": "Toole",
+      "description": "Resources available to the team."
+    },
+    "kpis": {
+      "title": "KPIs",
+      "description": "Key performance indicators."
+    }
+  },
+  "buttons": {
+    "closeCampaign": "Close campaign"
+  }
+}

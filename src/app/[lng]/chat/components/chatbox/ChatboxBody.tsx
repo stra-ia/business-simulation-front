@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Markdown from 'react-markdown';
 import FileError from './FileError';
 
+
 interface ChatboxBodyProps {
     messages: Messages[];
     type: AreaType;

@@ -1,0 +1,35 @@
+.resumeSection {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid #4f4f4f;
+  padding: 0px 0px 5px 0px;
+}
+
+.resumeSectionMore {
+  padding: 0px 0px 5px 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 5px;
+}
+
+.resumeSectionTitle {
+  color: #ffffff;
+
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0.0075em;
+  text-align: left;
+}
+
+.resumeSectionDescription {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.0075em;
+  text-align: left;
+  color: #bbbbbb;
+}
