@@ -4,37 +4,14 @@ import BriefCard from "./BriefCard";
 import BriefResume from "./BriefResume";
 import { useParams } from "next/navigation";
 import { useTranslation } from "@/app/i18n/client";
+import { useAtomValue } from "jotai";
+import { BriefPoints, briefPoints } from "@/atoms/briefPoints";
 
 export default function BriefBody() {
   const { lng } = useParams();
   const { t } = useTranslation(lng, "chatbox");
   const campaignDone = false;
-  const themes = [
-    {
-      isDone: true,
-      id: "goals",
-    },
-    {
-      isDone: false,
-      id: "productOrService",
-    },
-    {
-      isDone: false,
-      id: "targetMarket",
-    },
-    {
-      isDone: false,
-      id: "strategy",
-    },
-    {
-      isDone: false,
-      id: "toole",
-    },
-    {
-      isDone: false,
-      id: "kpis",
-    },
-  ];
+  const themes: any = useAtomValue(briefPoints);
 
   return (
     <>
@@ -45,7 +22,7 @@ export default function BriefBody() {
         ) : (
           <div className={style.cardsContainer}>
             {themes.length > 0 &&
-              themes.map((item, index) => <BriefCard key={index} {...item} />)}
+              themes.map((item : BriefPoints, index: any) => <BriefCard key={index} {...item} />)}
           </div>
         )}
       </div>
