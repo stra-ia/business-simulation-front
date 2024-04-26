@@ -4,6 +4,7 @@ import ChatBox from "./components/chatbox/Chatbox";
 import style from "./page.module.css";
 import Brief from "./components/brief/Brief";
 import * as THREE from "three";
+import CardHome from "./components/cardHome/CardHome";
 
 export default function Page() {
   const mountRef = useRef(null);
@@ -144,8 +145,9 @@ export default function Page() {
   return (
     <div className={style.main}>
       <div className={style.backgroundCanvas} ref={mountRef}></div>
-      <ChatBox />
-      <Brief />
+      {/* <ChatBox />
+      <Brief /> */}
+      <CardHome/>
     </div>
   );
 }
