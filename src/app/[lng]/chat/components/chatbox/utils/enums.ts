@@ -20,7 +20,9 @@ export interface Messages {
     message: string,
     file?: fileType,
     error: boolean,
-    date: string | Date
+    date: string | Date,
+    voice_message?: any,
+    voice?: any
 }
 
 export type HandleAdd = (

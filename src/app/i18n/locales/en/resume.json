@@ -1,7 +1,7 @@
 {
     "BriefResume": {
       "sales": {
-        "clientType": {
+        "customer": {
             "title": "Client Type",
             "description": "Define clear goals and deadlines."
           },
@@ -9,7 +9,7 @@
             "title": "Company Size",
             "description": "Brief description and advantages."
           },
-          "saleType": {
+          "salesApproach": {
             "title": "Sale Type",
             "description": "Client profile and needs."
           },
@@ -28,6 +28,11 @@
         },
         "challenge": {
             "title": "Challenge"
+        },
+        "campaign": {
+          "strategy": "Strategy",
+          "tactics": "Tactics",
+          "consequences": "Consequences"
         }
       }
     }

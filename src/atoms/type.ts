@@ -5,4 +5,4 @@ export enum Area  {
     SALES = 'Sales'
 }
 
-export const typeArea = atom<Area | null>(Area.SALES)
+export const typeArea = atom<Area | null>(Area.MARKETING)

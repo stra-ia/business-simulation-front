@@ -1,13 +1,13 @@
 {
     "BriefResume": {
       "sales": {
-        "clientType": {
+        "customer": {
             "title": "Tipo de cliente"
         },
         "companySize": {
             "title": "Tamaño de la empresa"
         },
-        "saleType": {
+        "salesApproach": {
             "title": "Tipo de venta"
         },
         "campaignDuration": {
@@ -23,7 +23,12 @@
         },
         "challenge": {
             "title": "Desafío"
-        }
+        },
+        "campaign": {
+            "strategy": "Estrategia",
+            "tactics": "Tacticas",
+            "consequences": "Consequencias"
+          }
       }
     }
   }
