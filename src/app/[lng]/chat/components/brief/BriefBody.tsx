@@ -10,7 +10,7 @@ import { BriefPoints, briefPoints } from "@/atoms/briefPoints";
 export default function BriefBody() {
   const { lng } = useParams();
   const { t } = useTranslation(lng, "chatbox");
-  const campaignDone = false;
+  const campaignDone = true;
   const themes: any = useAtomValue(briefPoints);
 
   return (

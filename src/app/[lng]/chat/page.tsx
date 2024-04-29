@@ -145,9 +145,9 @@ export default function Page() {
   return (
     <div className={style.main}>
       <div className={style.backgroundCanvas} ref={mountRef}></div>
-      {/* <ChatBox />
-      <Brief /> */}
-      <CardHome/>
+      <ChatBox />
+      <Brief />
+      {/* <CardHome/> */}
     </div>
   );
 }

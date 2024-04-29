@@ -1,0 +1,30 @@
+{
+    "BriefResume": {
+      "sales": {
+        "clientType": {
+            "title": "Tipo de cliente"
+        },
+        "companySize": {
+            "title": "Tamaño de la empresa"
+        },
+        "saleType": {
+            "title": "Tipo de venta"
+        },
+        "campaignDuration": {
+            "title": "Vigencia de la campaña"
+        },
+        "details": {
+            "title": "Más info"
+        }
+    },
+    "marketing": {
+        "scenery": {
+            "title": "Escenario"
+        },
+        "challenge": {
+            "title": "Desafío"
+        }
+      }
+    }
+  }
+  
