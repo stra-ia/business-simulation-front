@@ -6,6 +6,8 @@ import { validateDocFile, validateImageFile } from './utils/validations'
 import { useAtomValue } from 'jotai'
 import { isDisabledAtom } from '@/atoms/chatBot'
 
+import { AudioRecorder, useAudioRecorder } from 'react-audio-voice-recorder'
+
 interface ChatboxFooterProps {
   addMessage: HandleAdd
   handleChangeFile: any
@@ -37,6 +39,25 @@ export default function ChatboxFooter({
   const fileInputRef = useRef<HTMLInputElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const isDisabled = useAtomValue(isDisabledAtom)
+  const [isOpenedRecorder, setIsOpenedRecorder] = useState(false)
+  const {
+    stopRecording,
+    togglePauseResume,
+    startRecording,
+    isPaused,
+    recordingBlob,
+    isRecording,
+    recordingTime
+  } = useAudioRecorder()
+  const addAudioElement = (blob: Blob) => {
+    const url = URL.createObjectURL(blob)
+    const audio = document.createElement('audio')
+    console.log(audio, 'audio')
+
+    audio.src = url
+    audio.controls = true
+    document.body.appendChild(audio)
+  }
 
   useEffect(() => {
     if (inputRef.current) {
@@ -109,10 +130,89 @@ export default function ChatboxFooter({
     }
   }
 
-  useEffect(() => {}, [fileExtension])
+  const calculateTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60)
+    const remainingSeconds = seconds % 60
+    return `${minutes}: ${
+      remainingSeconds >= 10 ? '' : '0'
+    } ${remainingSeconds}`
+  }
+  useEffect(() => {
+    if (!recordingBlob) return
+    // addMessage({
+    //   role: authorType.USER,
+    //   message: recordingBlob,
+    //   date: new Date(),
+    // });
+    // console.log(recordingBlob, "recordingBlob");
+  }, [recordingBlob])
 
   return (
-    <div className={style.footer} data-is-disabled={isDisabled}>
+    <div className={style.footer}>
+      {isOpenedRecorder && (
+        <div className={style.recordContainer}>
+          <div
+            style={{
+              width: '30vw',
+              justifyContent: 'center',
+              display: 'flex',
+              alignItems: 'center',
+              alignContent: 'center',
+              gap: '10px'
+            }}
+          >
+            <button className={style.roundButton}>
+              <Image
+                priority
+                src="/button3.svg"
+                height={100}
+                width={100}
+                alt="Upload image"
+              />
+            </button>
+            <button
+              style={{
+                width: '150px',
+                height: '150px'
+              }}
+              onClick={() => {
+                if (isRecording) {
+                  stopRecording()
+                } else {
+                  startRecording()
+                }
+              }}
+              className={
+                style.roundButton + ' ' + (isRecording ? style.recording : '')
+              }
+            >
+              <Image
+                priority
+                src={isRecording ? '/button4.svg' : '/button1.svg'}
+                height={150}
+                width={150}
+                alt="Upload image"
+              />
+              <h5>{calculateTime(recordingTime)}</h5>
+            </button>
+
+            <button
+              onClick={() => {
+                togglePauseResume()
+              }}
+              className={style.roundButton}
+            >
+              <Image
+                priority
+                src="/button2.svg"
+                height={100}
+                width={100}
+                alt="Upload image"
+              />
+            </button>
+          </div>
+        </div>
+      )}
       {showUploadButton && (
         <div className={style.fileContainer}>
           <div
@@ -160,6 +260,7 @@ export default function ChatboxFooter({
           </div>
         </div>
       )}
+
       <div className={style.footerButtons}>
         <button
           className={style.button}
@@ -178,32 +279,35 @@ export default function ChatboxFooter({
           />
         </button>
 
-        <input
-          className={style.input}
-          placeholder="Write something..."
-          value={message}
-          onKeyDown={handleKeyDown}
-          onChange={handleChangeMessage}
-          type="text"
-          ref={inputRef}
-        />
+        {!isOpenedRecorder && (
+          <>
+            <input
+              className={style.input}
+              placeholder="Write something..."
+              value={message}
+              onKeyDown={handleKeyDown}
+              onChange={handleChangeMessage}
+              type="text"
+            />
+            <button
+              className={style.button}
+              onClick={handleCreateMessage}
+              name="button"
+              type="button"
+            >
+              <Image
+                priority
+                src="/paper-plane.svg"
+                alt="Send"
+                width={15}
+                height={15}
+                className={style.iconFooter}
+              />
+            </button>
+          </>
+        )}
         <button
-          className={style.button}
-          onClick={handleCreateMessage}
-          name="button"
-          type="button"
-          disabled={isDisabled}
-        >
-          <Image
-            priority
-            src="/paper-plane.svg"
-            alt="Send"
-            width={15}
-            height={15}
-            className={style.iconFooter}
-          />
-        </button>
-        <button
+          onClick={() => setIsOpenedRecorder(!isOpenedRecorder)}
           className={style.buttonVoice}
           name="button"
           type="button"
@@ -211,7 +315,7 @@ export default function ChatboxFooter({
         >
           <Image
             priority
-            src="/microphone.svg"
+            src={isOpenedRecorder ? '/mensaje.png' : '/microphone.svg'}
             alt="Voice"
             width={15}
             height={15}
