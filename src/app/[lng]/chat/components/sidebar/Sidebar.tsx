@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 import MenuItem from './MenuItem'
 import style from './Sidebar.module.css'
-import { useParams } from 'next/navigation'
+import { useParams, useSearchParams } from 'next/navigation'
 import { useTranslation } from '@/app/i18n/client'
 import SidebarHistory from './SidebarHistory'
 
@@ -25,8 +25,6 @@ export default function Sidebar({ showSidebar, setShowSidebar } : sideBar) {
             name: 'marketing'
         }
     ]
-    const date = new Date();
-    console.log(date,'date')
     const histories = [
         {
             name: 'Campaña de marketing 2023',
@@ -45,7 +43,10 @@ export default function Sidebar({ showSidebar, setShowSidebar } : sideBar) {
             date: new Date('2024-04-13T03:24:00')
         }
     ]
-    console.log('histories',histories)
+
+    const setLngParam = ( lenguage: string ) => {
+        window.location.href = `http://localhost:3000/${lenguage}/chat`
+    } 
 
     return (
         <>
@@ -54,7 +55,7 @@ export default function Sidebar({ showSidebar, setShowSidebar } : sideBar) {
             <div className={style.sidebarMainContainer}>
                 <div className={`${style.sidebarBody}${style.appendClass}`}>
                     <div className={style.sidebarHeader}>
-                        <Link className={style.sideBarHeaderLink} href="/">
+                        <div className={style.sideBarHeaderLink}>
                             <img 
                                 src='/highVoltage.svg' 
                                 alt="High Voltage Logo" 
@@ -62,14 +63,16 @@ export default function Sidebar({ showSidebar, setShowSidebar } : sideBar) {
                                 height={40} />
                             <p className={style.sidebarHeaderTitle}>AI Generator</p>
                             <img 
+                                onClick={ () => setLngParam('es') }
                                 className={`${lng === 'en' ? style.sidebarHeaderFlagOff : style.sidebarHeaderFlag}`} 
                                 src='/spain.svg' alt="Spain flag" 
                                 width={20} height={20} />
                             <img 
+                                onClick={ () => setLngParam('en') }
                                 className={`${lng === 'es' ? style.sidebarHeaderFlagOff : style.sidebarHeaderFlag}`} 
                                 src='/uk.svg' alt="Spain flag" 
                                 width={20} height={20} />
-                        </Link>
+                        </div>
                     </div>
                     <hr className={style.hr} />
                     <h3 className={style.sidebarH3}>{t(`sidebar.slogan`)} <span className={style.sidebarH3span}>{t(`sidebar.sloganSpan`)}</span></h3>

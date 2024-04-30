@@ -134,6 +134,7 @@
     width: 20px;
     align-self: center;
     position: relative;
+    cursor: pointer;
 }
 
 .sidebarHeaderFlagOff {
@@ -142,6 +143,7 @@
     align-self: center;
     position: relative;
     opacity: 0.5 !important;
+    cursor: pointer;
 }
 
 .sidebarHeaderFlagOff:hover{
