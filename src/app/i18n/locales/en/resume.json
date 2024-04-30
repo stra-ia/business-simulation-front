@@ -1,0 +1,40 @@
+{
+    "BriefResume": {
+      "sales": {
+        "customer": {
+            "title": "Client Type",
+            "description": "Define clear goals and deadlines."
+          },
+          "companySize": {
+            "title": "Company Size",
+            "description": "Brief description and advantages."
+          },
+          "salesApproach": {
+            "title": "Sale Type",
+            "description": "Client profile and needs."
+          },
+          "campaignDuration": {
+            "title": "Campaign Duration",
+            "description": "Main sales methods."
+          },
+          "details": {
+            "title": "More info",
+            "description": "Resources available to the team."
+          }
+      },
+      "marketing": {
+        "scenery": {
+            "title": "Scenery"
+        },
+        "challenge": {
+            "title": "Challenge"
+        },
+        "campaign": {
+          "strategy": "Strategy",
+          "tactics": "Tactics",
+          "consequences": "Consequences"
+        }
+      }
+    }
+  }
+  

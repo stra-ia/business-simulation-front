@@ -1,124 +1,143 @@
-import React, { useEffect, useMemo, useRef } from "react";
-import style from "./ChatboxBody.module.css";
-import { AreaType, Messages, authorType } from "./utils/enums";
-import Image from "next/image";
-import Markdown from "react-markdown";
-import { useParams } from "next/navigation";
-import { useTranslation } from "@/app/i18n/client";
+import React, { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react'
+import style from './ChatboxBody.module.css'
+import { AreaType, Messages, authorType } from './utils/enums';
+import Image from 'next/image';
+import Markdown from 'react-markdown';
+import FileError from './FileError';
+
 
 interface ChatboxBodyProps {
-  messages: Messages[];
-  type: AreaType;
+    messages: Messages[];
+    type: AreaType;
+    handleChangeFile: (event: ChangeEvent<HTMLInputElement>) => void
 }
 
-export default function ChatboxBody({ messages, type }: ChatboxBodyProps) {
-  const { lng } = useParams();
-  const { t } = useTranslation(lng, "chatbox");
-  const bodyRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    //3️⃣ bring the last item into view
-    bodyRef.current?.lastElementChild?.scrollIntoView();
-  }, [messages]);
+export default function ChatboxBody( {messages, type, handleChangeFile} : ChatboxBodyProps ) {
 
-  const groupMessagesByDateAndSender = (messages: any) => {
-    return messages.reduce((groups: any, message: any) => {
-      const dayWeek = message.date.toLocaleDateString("en-US", {
-        weekday: "long",
-      });
-      const dayMonth = message.date.getDate();
-      const monthName = message.date.toLocaleDateString("en-US", {
-        month: "long",
-      });
-      const formattedDate = `${dayWeek}, ${dayMonth} ${monthName}`;
+    const bodyRef = useRef<HTMLDivElement>(null);
+    useEffect(() => {},[])
+    useEffect(() => {},[messages])
+    useEffect(() => {
+        bodyRef.current?.lastElementChild?.scrollIntoView()
+    }, [messages]);
+    
 
-      if (!groups[formattedDate]) {
-        groups[formattedDate] = [];
-      }
-      groups[formattedDate].push([message]);
-      return groups;
-    }, {});
-  };
+    const groupMessagesByDateAndSender = (messages: any) => {
+        return messages.reduce((groups: any, message: any) => {
+            const dayWeek = message.date.toLocaleDateString('en-US', { weekday: "long" });  
+            const dayMonth = message.date.getDate(); 
+            const monthName = message.date.toLocaleDateString('en-US', { month: "long" }); 
+            const formattedDate = `${dayWeek}, ${dayMonth} ${monthName}`;
 
-  const groups = useMemo(
-    () => Object.entries(groupMessagesByDateAndSender(messages)),
-    [messages]
-  );
+            if (!groups[formattedDate]) {
+                groups[formattedDate] = [];
+            }
+            groups[formattedDate].push([message]);
+            return groups
+        }, {});
+    }
 
-  return (
-    <>
-      {type == AreaType.MARKETING && (
-        <div className={style.briefDisclaimer}>
-          <span>{t("chatbox.messageWelcome")}</span>
-        </div>
-      )}
-      <hr className={style.hr} />
-      <div ref={bodyRef} className={style.body}>
-        {groups.map(([date, messagesGroups], index) => (
-          <React.Fragment key={index}>
-            <p className={style.dateSpan}>{date}</p>
-            {messagesGroups.length > 0 &&
-              messages.map((item, i) => (
-                <div key={i}>
-                  {item.role == authorType.BOT ? (
-                    <div className={style.messageContainer}>
-                      <div className={style.iconContainer}>
-                        <Image
-                          priority
-                          src="/robot.svg"
-                          alt="Vercel Logo"
-                          width={100}
-                          height={24}
-                          className={style.iconRobot}
-                        />
-                      </div>
-                      <div className={style.messageForMe}>
-                        <Markdown>{item.message}</Markdown>
-                      </div>
-                    </div>
-                  ) : (
-                    <div key={i}>
-                      <div className={style.messageByMe}>{item.message}</div>
-                      {item.file && item.file.fileData && (
-                        <div className={style.fileByMe}>
-                          {/* <Image
-                                                    priority
-                                                    src={item.file.fileData}
-                                                    alt="Image"
-                                                    width={200}
-                                                    height={200}
-                                                    className={style.file}
-                                                /> */}
-                          {/* <object
-                                                    className={style.file}
-                                                    data={item.file.fileData}
-                                                    type="application/pdf"
-                                                    width="300px"
-                                                    height="350px"
-                                                >
-                                                    <embed width='200px' height="300px" src={item.file.fileData} type="application/pdf" />
-                                                </object> */}
+    const isSameGroup = ( current: authorType, previous: authorType  ) => {
+        console.log(current, previous,'ojo')
+        return current == previous ? true : false;
+    }
 
-                          <iframe
-                            style={{ overflow: "hidden;" }}
-                            className={style.file}
-                            src={`${item.file.fileData}`}
-                          ></iframe>
-                          {/* <embed
-                                                    className={style.file}
-                                                    src={`${item.file.fileData}`}
-                                                    width={200}
-                                                    height={300}
-                                                        type="application/pdf">
-                                                </embed> */}
-                        </div>
-                      )}
-                    </div>
-                  )}
+    const groups = useMemo(
+        () => Object.entries(groupMessagesByDateAndSender(messages)),
+    [messages],
+    );
+    
+
+    return (
+        <>
+        {
+            type == AreaType.MARKETING && 
+            (
+                <div className={style.briefDisclaimer}>
+                    <span>
+                        Definiendo Brief. Puedes iniciar la conversación para construir tu campaña.
+                    </span>
                 </div>
-              ))}
-          </React.Fragment>
-        ))}
-      </div>
-    </>
-  );
+            )
+        } 
+        <hr className={style.hr} />
+            <div ref={bodyRef} className={style.body}>  
+                {
+                    groups.map(([date, messagesGroups], index) => (
+                        <React.Fragment key={index}>
+                            <span className={ style.dateSpan }>{date}</span>
+                        {
+                            messagesGroups.length > 0 && messages.map(( item, i ) => (
+                                <>
+                                {
+                                    /// model bubble [start] ///
+                                    item.role == authorType.BOT &&
+                                    <div 
+                                        key={i} 
+                                        className={`${style.messageContainer} 
+                                        ${ isSameGroup(item.role, messages[i-1]?.role) ? style.sameGroup : ''  }`}>
+                                            <div className={style.iconContainer}>
+                                                <Image
+                                                    priority
+                                                    src='/robot.svg'
+                                                    alt="robot icon"
+                                                    width={100}
+                                                    height={24}
+                                                    className={style.iconRobot }
+                                                />
+                                            </div>
+                                            <div key={i} className={ style.messageForMe }>
+                                                <Markdown>{item.message}</Markdown>
+                                            </div>
+                                    </div>
+                                    /// model bubble [end] ///
+                                }
+                                {
+                                    /// user bubble [start] ///
+                                    (item.role == authorType.USER && !item.error ) &&
+                                    <>
+                                        <div  key={i} 
+                                              className={`${style.messageByMe }
+                                              ${ isSameGroup(item.role, messages[i-1]?.role) ? style.sameGroup : ''  }`}>
+                                            {item.message}
+                                        </div>
+                                        {
+                                            (item.file && item.file.fileData && item.file.fileType == 'pdf')  && 
+                                                <div key={i} className={ style.fileByMe }>
+                                                    <iframe 
+                                                        style={{"overflow":"hidden;"}}
+                                                        className={style.file}
+                                                        src={`${item.file.fileURL}`}
+                                                    >    
+                                                    </iframe>        
+                                                </div>
+                                        }
+                                        {
+                                            (item.file && item.file.fileData && item.file.fileType != 'pdf' ) && 
+                                            <div key={i} className={ style.fileByMe}>
+                                                {
+                                                    item.file?.fileData.name
+                                                }             
+                                            </div>
+                                        }
+                                    </>
+                                    /// user bubble [end] ///
+                                }
+                                {
+                                    /// file error bubble [start] ///
+                                    item.error &&
+                                    <div key={i} className={ style.errorFile }>
+                                        <FileError handleChangeFile={handleChangeFile} />
+                                    </div>
+                                    /// file error bubble [end] ///
+                                }
+                                </>
+                            )) 
+                        }
+                        </React.Fragment>
+                    ))
+                }
+            </div>
+        </>
+    )
 }

@@ -1,0 +1,30 @@
+{
+    "CardHome": {
+      "campaignType": {
+        "title": "Campaign Type",
+        "number": 1,
+        "description": "Select the type of campaign we want to build."
+      },
+      "briefMaking": {
+        "title": "Brief Making",
+        "number": 2,
+        "description": "Within the chatBot we can define the Brief of our campaign"
+      },
+      "clientInteraction": {
+        "title": "Client Interaction",
+        "number": 3,
+        "description": "We will be able to interact with our client to consolidate the objectives of the campaign"
+      },
+      "feedback": {
+        "title": "Feedback",
+        "number": 4,
+        "description": "After closing the campaign, we will be able to see its results and analysis."
+      },
+      "registrationAndTracking": {
+        "title": "Registration And Tracking",
+        "number": 5,
+        "description": "Once the feedback is defined, we can save the results and have a record for future occasions"
+      }
+    }
+  }
+  

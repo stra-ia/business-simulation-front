@@ -1,0 +1,80 @@
+.card {
+    display: flex;
+    flex-direction: row;
+    border-radius: 12px;
+    color: white;
+    background-color: #1a1919;
+
+
+    width: Fill (549px)px;
+    /* height: 128px; */
+    height: 18%;
+    padding: 24px;
+    gap: 35px;
+    border-radius: 12px;
+    opacity: 0px;
+    align-items: center;
+  }
+  
+  .cardNumber {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #8f8f8f;
+    font-size: 50px;
+    align-items: center;
+    padding-left: 20px;
+    width: 8%;
+  }
+
+  
+  .cardDetailsContainer {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .cardTitle {
+    font-size: 16px;
+    font-weight: 600 !important;
+    line-height: 24px;
+    letter-spacing: 0.0075em;
+    text-align: left;
+    color: #FFFFFF;
+  }
+  
+  .cardDescription {
+    font-size: 16px;
+    font-weight: 400 !important;
+    line-height: 24px;
+    letter-spacing: 0.0075em;
+    text-align: left;
+    color: #8f8f8f;
+  }
+
+  @media (max-width: 700px) {
+    .cardDescription{
+      font-size: 16px;
+    }
+    .cardTitle{
+      font-size: 16px;
+    }
+  }
+  
+  /* Tablet and Smaller Desktop */
+  @media (min-width: 701px) and (max-width: 1120px) {
+    .cardDescription{
+      font-size: 12px;
+    }
+    .cardTitle{
+      font-size: 12px;
+    }
+  }
+
+  @media (min-width: 1400px) {
+    .cardDescription{
+      font-size: 18px;
+    }
+    .cardTitle{
+      font-size: 18px;
+    }
+  }
