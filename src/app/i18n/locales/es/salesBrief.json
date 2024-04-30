@@ -1,5 +1,6 @@
 {
   "SalesBriefs": {
+
     "goals": {
       "title": "Objetivos",
       "description": "Definir objetivos claros y plazos."
@@ -23,6 +24,18 @@
     "kpis": {
       "title": "KPIs",
       "description": "Indicadores clave de rendimiento."
+    },
+    "customer": {
+      "title": "Tipo de cliente",
+      "description": "Especifica el tipo de cliente para practicar."
+    },
+    "company_size": {
+      "title": "Tamaño de la empresa",
+      "description": "Menciona el tamaño de la empresa para practicar."
+    },
+    "sales_approach": {
+      "title": "Tipo de venta",
+      "description": "Indica el tipo de venta para practicar."
     }
   },
   "buttons": {

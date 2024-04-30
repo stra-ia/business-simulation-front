@@ -5,6 +5,11 @@
         display: flex;
     }
 
+    .footer[data-is-disabled='true'] button, .footer[data-is-disabled='true'] .fileContainer{
+        pointer-events: none;
+        opacity: 0.5;
+    }
+
     .footerButtons{
         flex-direction: row;
         justify-content: space-between;
