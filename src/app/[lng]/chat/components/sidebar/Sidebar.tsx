@@ -7,6 +7,8 @@ import style from './Sidebar.module.css'
 import { useParams, useSearchParams } from 'next/navigation'
 import { useTranslation } from '@/app/i18n/client'
 import SidebarHistory from './SidebarHistory'
+import { useAtomValue, useSetAtom } from 'jotai'
+import { Area, typeArea } from '@/atoms/type'
 
 interface sideBar {
     showSidebar: any,
@@ -17,7 +19,9 @@ export default function Sidebar({ showSidebar, setShowSidebar } : sideBar) {
 
     const { lng } = useParams();
     const { t } = useTranslation(lng, "sidebar");
-    const routes = [
+    const setAreaType = useSetAtom(typeArea);
+    const AreaType = useAtomValue(typeArea);
+    const options = [
         {
            name: 'sales'
         },
@@ -47,6 +51,15 @@ export default function Sidebar({ showSidebar, setShowSidebar } : sideBar) {
     const setLngParam = ( lenguage: string ) => {
         window.location.href = `http://localhost:3000/${lenguage}/chat`
     } 
+
+    const setType = ( type : Area ) => {
+        setShowSidebar(false);
+        setAreaType(type);
+    }
+
+    useEffect(() => {
+        console.log(AreaType,'AreaType')
+    },[AreaType])
 
     return (
         <>
@@ -85,8 +98,10 @@ export default function Sidebar({ showSidebar, setShowSidebar } : sideBar) {
                             <p> {t(`sidebar.newCampaign`)} </p>
                         </button>
                         {
-                            routes.map(({ name }) => (
-                                <MenuItem name={name}  />
+                            options.map(({ name }) => (
+                                <MenuItem 
+                                    name={name}
+                                    onClick={setType}  />
                             ))
                         }
                     </div>

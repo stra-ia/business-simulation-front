@@ -2,6 +2,7 @@
 import style from './MenuItem.module.css'
 import { useParams } from 'next/navigation';
 import { useTranslation } from '@/app/i18n/client';
+import { Area } from '@/atoms/type';
  interface MenuItem {
     name: string,
     onClick?: any
@@ -14,9 +15,7 @@ import { useTranslation } from '@/app/i18n/client';
 
     return (
         <button className={style.menuItemBody}
-            onClick={() => {
-               console.log('a')
-            }}
+            onClick={() => onClick( name == Area.MARKETING.toLocaleLowerCase() ? Area.MARKETING : Area.SALES)}
         >
            <p> {t(`sidebar.${name}`)}</p> 
         </button>
