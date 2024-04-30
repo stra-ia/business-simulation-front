@@ -1,0 +1,15 @@
+{
+    "sidebar": {
+      "title": "AI Generator",
+      "lenguages": {
+        "spanish": "Español",
+        "english": "Ingles"
+      },
+      "slogan": "¡Haz de tu campaña",
+      "sloganSpan": "la mejor!",
+      "newCampaign": "Crear campaña",
+      "sales": "Ventas",
+      "marketing": "Marketing"
+    }
+}
+  

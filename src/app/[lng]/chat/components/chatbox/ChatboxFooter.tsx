@@ -1,11 +1,23 @@
 import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 import style from "./ChatboxFooter.module.css";
-import { HandleAdd, authorType, fileType } from "./utils/enums";
+import { HandleAdd, Messages, authorType, fileType } from "./utils/enums";
 import Image from "next/image";
 import { validateDocFile, validateImageFile } from "./utils/validations";
 import { AudioRecorder, useAudioRecorder } from "react-audio-voice-recorder";
+
 interface ChatboxFooterProps {
   addMessage: HandleAdd;
+  addMessage: HandleAdd;
+  handleChangeFile: any;
+  handleDropFile: any;
+  fileData: any;
+  setFile: any;
+  previewFile: any;
+  setPreviewFile: any;
+  fileExtension: any;
+  setFileExtension: any;
+  showUploadButton: any;
+  setShowUploadButton: any;
 }
 
 export default function ChatboxFooter({ addMessage }: ChatboxFooterProps) {

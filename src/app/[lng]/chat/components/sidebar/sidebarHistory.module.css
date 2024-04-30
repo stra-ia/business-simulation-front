@@ -1,0 +1,34 @@
+.sidebarHistory {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    bottom: 10%;
+    color: #ffffff;
+    gap: 10px;
+}
+
+.sideBarHistoryCard {
+ display: flex;
+ flex-direction: column;
+ margin: 10px;
+}
+
+.sideBarHistoryCard p{
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0.01em;
+    line-height: 12px;
+    text-align: left;
+    color: #838383;
+}
+
+.sideBarHistoryCard li{
+    font-family: Poppins;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.01em;
+    line-height: 12px;
+    text-align: left;
+    color: #ffffff;
+}

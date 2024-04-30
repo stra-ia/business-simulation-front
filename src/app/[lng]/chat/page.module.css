@@ -1,10 +1,18 @@
+.mainContainer{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: row;
+}
+
 .main {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   padding: 1rem;
   min-height: 100vh;
+  gap: 25px;
 }
 
 .description {

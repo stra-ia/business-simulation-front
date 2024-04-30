@@ -9,17 +9,19 @@ export enum AreaType {
 }
 
 export interface fileType {
+  fileURL: string;
   fileData: any;
   fileType: string;
-  blob?: Blob;
 }
 
 export interface Messages {
   role: authorType;
-  message: string | Blob;
+  message: string;
   file?: fileType;
+  error: boolean;
   date: string | Date;
-  blob?: fileType;
+  voice_message?: any;
+  voice?: any;
 }
 
 export type HandleAdd = (message: Messages, file?: any) => void;

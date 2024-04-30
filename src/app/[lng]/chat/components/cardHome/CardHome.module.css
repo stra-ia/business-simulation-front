@@ -1,0 +1,16 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    /* width: 723px;
+    height: 820px; */
+    padding: 24px;
+    width: 45vw;
+    height: 95vh;
+    gap: 0px;
+    justify-content: space-between;
+    gap: 16px;
+    border-radius: 18px !important;
+    opacity: 0px;  
+  }
