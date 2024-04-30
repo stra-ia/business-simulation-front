@@ -1,13 +1,15 @@
  // Clickable menu items
- import Link from 'next/link';
- import style from './MenuItem.module.css'
+import style from './MenuItem.module.css'
+import { useParams } from 'next/navigation';
+import { useTranslation } from '@/app/i18n/client';
  interface MenuItem {
     name: string,
-    route?: string,
     onClick?: any
  }
 
- export default function MenuItem ({ name, route, onClick } : MenuItem) {
+ export default function MenuItem ({ name, onClick } : MenuItem) {
+   const { lng } = useParams();
+   const { t } = useTranslation(lng, "sidebar");
     // Highlight menu item based on currently displayed route
 
     return (
@@ -16,7 +18,7 @@
                console.log('a')
             }}
         >
-           <p>{name}</p> 
+           <p> {t(`sidebar.${name}`)}</p> 
         </button>
     )
 }

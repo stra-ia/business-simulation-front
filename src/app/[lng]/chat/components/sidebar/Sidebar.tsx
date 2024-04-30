@@ -5,6 +5,8 @@ import Link from 'next/link'
 import MenuItem from './MenuItem'
 import style from './Sidebar.module.css'
 import { useParams } from 'next/navigation'
+import { useTranslation } from '@/app/i18n/client'
+import SidebarHistory from './SidebarHistory'
 
 interface sideBar {
     showSidebar: any,
@@ -14,26 +16,36 @@ interface sideBar {
 export default function Sidebar({ showSidebar, setShowSidebar } : sideBar) {
 
     const { lng } = useParams();
-    console.log(lng,'lng')
+    const { t } = useTranslation(lng, "sidebar");
     const routes = [
         {
-           name: 'Ventas',
-           route: '/es/chat',
+           name: 'sales'
         },
         {
-            name: 'Marketing',
-            route: '/es/chat',
+            name: 'marketing'
         }
     ]
-    // Overlay to prevent clicks in background, also serves as our close button
-    // const Overlay = () => (
-    //     <div
-    //         className={style.modalOverlay}
-    //         onClick={() => {
-    //             setShowSidebar(!showSidebar)
-    //         }}
-    //     />
-    // )
+    const date = new Date();
+    console.log(date,'date')
+    const histories = [
+        {
+            name: 'Campaña de marketing 2023',
+            date: new Date('2024-02-13T03:24:00')
+        },
+        {
+            name: 'Campaña de sales 2023',
+            date: new Date('2024-02-13T03:24:00')
+        },
+        {
+            name: 'Campaña de ventas 2023',
+            date: new Date('2024-04-13T03:24:00')
+        },
+        {
+            name: 'Marketing en el caribe 2023',
+            date: new Date('2024-04-13T03:24:00')
+        }
+    ]
+    console.log('histories',histories)
 
     return (
         <>
@@ -60,33 +72,22 @@ export default function Sidebar({ showSidebar, setShowSidebar } : sideBar) {
                         </Link>
                     </div>
                     <hr className={style.hr} />
-                    <h3 className={style.sidebarH3}>¡Haz de tu campaña <span className={style.sidebarH3span}>la mejor!</span></h3>
+                    <h3 className={style.sidebarH3}>{t(`sidebar.slogan`)} <span className={style.sidebarH3span}>{t(`sidebar.sloganSpan`)}</span></h3>
                     <div className={style.sidebarOption}>
                         <button className={style.sideBarAddButton}>
                             <img 
                                 className={style.sidebarHeaderPlus} 
                                 src='/plus.svg' alt="plus icon" 
                                 width={20} height={20} />
-                            <p>Crear campaña</p>
+                            <p> {t(`sidebar.newCampaign`)} </p>
                         </button>
                         {
-                            routes.map(({ name, route}) => (
-                                <MenuItem name={name} route={route} />
+                            routes.map(({ name }) => (
+                                <MenuItem name={name}  />
                             ))
                         }
                     </div>
-                    <div className={style.sidebarHistory}>
-                        <div className={style.sideBarHistoryCard}>
-                            <p>Enero 2024</p>
-                            <li>Campaña de marketing 2023</li>
-                            <li>Campaña de sales 2023</li>
-                        </div>
-                        <div className={style.sideBarHistoryCard}>
-                            <p>Febrero 2024</p>
-                            <li>Campaña de ventas 2023</li>
-                            <li>Marketing en el caribe 2023</li>
-                        </div>
-                    </div>
+                    <SidebarHistory histories={histories}/>
                 </div>
                 {/* <img 
                     onClick={ () => setShowSidebar(!showSidebar)}
