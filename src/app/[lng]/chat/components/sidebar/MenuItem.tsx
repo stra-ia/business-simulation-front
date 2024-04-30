@@ -17,7 +17,7 @@ import { Area } from '@/atoms/type';
         <button className={style.menuItemBody}
             onClick={() => onClick( name == Area.MARKETING.toLocaleLowerCase() ? Area.MARKETING : Area.SALES)}
         >
-           <p> {t(`sidebar.${name}`)}</p> 
+           <p className={style.menuItemButtonText}> {t(`sidebar.${name}`)}</p> 
         </button>
     )
 }

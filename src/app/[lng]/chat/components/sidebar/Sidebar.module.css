@@ -8,8 +8,7 @@
     align-content: center;
     justify-content: center;
 
-    width: 350px;
-    /* margin-left: -9%; */
+    width: 15%;
 }
 
 .sidebarBody {
@@ -64,7 +63,7 @@
 }
 
 .sidebarHeaderTitle {
-    font-family: Poppins;
+    /* font-family: Poppins; */
     font-weight: 600;
     font-size: 30px;
     letter-spacing: 0.01em;
@@ -111,8 +110,15 @@
     border-top: 1px solid #4f4f4f;
 }
 
+.hrBottom {
+    border: none;
+    border-top: 1px solid #4f4f4f;
+    /* padding-bottom: 10px; */
+    background: linear-gradient(to right, #4F4F4F33, #B5B5B5);
+    margin-bottom: 10px;
+}
 .sidebarH3{
-    font-family: Poppins;
+    /* font-family: Poppins; */
     font-weight: 500;
     font-size: 20px;
     letter-spacing: 0.01em;
@@ -160,7 +166,7 @@
     background: #3D3D3D;
     border: none;
 
-    font-family: Poppins;
+    /* font-family: Poppins; */
     font-size: 15px;
     line-height: 12px;
     font-weight: 500;
@@ -195,3 +201,40 @@
     cursor: pointer;
 }
 
+
+@media (max-width: 700px) {
+    .sidebarMainContainer{
+      width:  20%;
+    }
+  }
+  
+  /* Tablet and Smaller Desktop */
+  @media (min-width: 701px) and (max-width: 1120px) {
+        .sidebarMainContainer{
+            width:  20%;
+        }
+    }
+
+    @media (max-width: 1280px) {
+        .sidebarMainContainer{
+            width:  30%;
+        }
+    }
+
+    @media (max-width: 1440px) {
+        .sidebarMainContainer{
+            width:  30%;
+        }
+    }
+
+    @media (max-width: 1780px) {
+        .sidebarMainContainer{
+            width:  25%;
+        }
+    }
+
+    @media (max-width: 2000px) {
+        .sidebarMainContainer{
+            width:  20%;
+    }
+  }

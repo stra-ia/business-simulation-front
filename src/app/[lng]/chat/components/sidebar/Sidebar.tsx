@@ -58,7 +58,6 @@ export default function Sidebar({ showSidebar, setShowSidebar } : sideBar) {
     }
 
     useEffect(() => {
-        console.log(AreaType,'AreaType')
     },[AreaType])
 
     return (
@@ -89,6 +88,7 @@ export default function Sidebar({ showSidebar, setShowSidebar } : sideBar) {
                     </div>
                     <hr className={style.hr} />
                     <h3 className={style.sidebarH3}>{t(`sidebar.slogan`)} <span className={style.sidebarH3span}>{t(`sidebar.sloganSpan`)}</span></h3>
+                    <hr className={style.hrBottom} />
                     <div className={style.sidebarOption}>
                         <button className={style.sideBarAddButton}>
                             <img 
