@@ -7,7 +7,6 @@ import { AudioRecorder, useAudioRecorder } from "react-audio-voice-recorder";
 
 interface ChatboxFooterProps {
   addMessage: HandleAdd;
-  addMessage: HandleAdd;
   handleChangeFile: any;
   handleDropFile: any;
   fileData: any;
@@ -20,13 +19,21 @@ interface ChatboxFooterProps {
   setShowUploadButton: any;
 }
 
-export default function ChatboxFooter({ addMessage }: ChatboxFooterProps) {
+export default function ChatboxFooter({
+  addMessage,
+  handleChangeFile,
+  handleDropFile,
+  previewFile,
+  setPreviewFile,
+  fileExtension,
+  setFileExtension,
+  showUploadButton,
+  setShowUploadButton,
+  fileData,
+  setFile,
+}: ChatboxFooterProps) {
   const [message, setMessage] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [file, setFile] = useState<any[]>([]);
-  const [fileExtension, setFileExtension] = useState("");
-  const [previewFile, setPreviewFile] = useState("");
-  const [showUploadButton, setShowUploadButton] = useState(false);
   const [isOpenedRecorder, setIsOpenedRecorder] = useState(false);
   const {
     stopRecording,
@@ -72,9 +79,10 @@ export default function ChatboxFooter({ addMessage }: ChatboxFooterProps) {
       return;
     }
     if (!previewFile) {
-      let newMessage = {
+      let newMessage: Messages = {
         role: authorType.USER,
         message: message,
+        error: false,
         date: new Date(),
       };
       addMessage(newMessage);
@@ -83,13 +91,15 @@ export default function ChatboxFooter({ addMessage }: ChatboxFooterProps) {
       // const imageParts = await Promise.all(
       //     file.map(fileToGenerativePart)
       //   );
-      let newMessage = {
+      let newMessage: Messages = {
         role: authorType.USER,
         message: message,
         file: {
-          fileData: previewFile,
+          fileURL: previewFile,
+          fileData: fileData[0],
           fileType: fileExtension,
         },
+        error: false,
         date: new Date(),
       };
       console.log(newMessage, "newMessage");
@@ -98,11 +108,8 @@ export default function ChatboxFooter({ addMessage }: ChatboxFooterProps) {
       setMessage("");
       setPreviewFile("");
       setFileExtension("");
+      setFile([]);
     }
-  };
-
-  const getFileExtension = (name: string) => {
-    return name.substring(name.lastIndexOf(".")).replace(".", "").toLowerCase();
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -111,35 +118,6 @@ export default function ChatboxFooter({ addMessage }: ChatboxFooterProps) {
     }
   };
 
-  const handleChangeFile = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files != undefined && event.target.files?.length > 0) {
-      if (!validateDocFile(event.target.files)) {
-        console.log("not valid format");
-        return;
-      }
-      setShowUploadButton(!showUploadButton);
-      setFile([event.target.files[0]]);
-      console.log(event.target.files[0], "file");
-      setPreviewFile(URL.createObjectURL(event.target.files[0]));
-      let filetype = getFileExtension(event.target.files[0].name);
-      setFileExtension(filetype);
-    }
-  };
-
-  const handleDropFile = (selectedFile: FileList) => {
-    if (selectedFile && selectedFile.length > 0) {
-      if (!validateDocFile(selectedFile)) {
-        console.log("not valid format");
-        return;
-      }
-      setShowUploadButton(!showUploadButton);
-      const fileList: any = selectedFile[0];
-      setFile(fileList);
-      setPreviewFile(URL.createObjectURL(fileList));
-      let filetype = getFileExtension(fileList.name);
-      setFileExtension(filetype);
-    }
-  };
   const calculateTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
@@ -156,7 +134,6 @@ export default function ChatboxFooter({ addMessage }: ChatboxFooterProps) {
     // });
     // console.log(recordingBlob, "recordingBlob");
   }, [recordingBlob]);
-  useEffect(() => {}, [file]);
 
   return (
     <div className={style.footer}>

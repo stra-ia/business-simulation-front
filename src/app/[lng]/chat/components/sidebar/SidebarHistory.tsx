@@ -2,6 +2,7 @@
  import { useParams } from 'next/navigation';
  import React, { useEffect, useMemo } from 'react';
  import style from './sidebarHistory.module.css'
+import Image from 'next/image';
 
   interface SidebarHistory {
     histories: any[],
@@ -17,10 +18,9 @@
 
     const groupMessagesByDateAndSender = ( arr : any) => {
         return arr.reduce((groups: any, history: any) => {
-            const dayWeek = history.date.toLocaleDateString(format(), { weekday: "long" });  
-            const dayMonth = history.date.getDate(); 
+            const dateYear = history.date.toLocaleDateString(format(), { year: "numeric" });  
             const monthName = history.date.toLocaleDateString(format(), { month: "long" }); 
-            const formattedDate = `${dayWeek.charAt(0).toUpperCase()}${dayWeek.slice(1)}, ${dayMonth} ${monthName}`;
+            const formattedDate = `${monthName.charAt(0).toUpperCase()}${monthName.slice(1)} ${dateYear}`;
 
             if (!groups[formattedDate]) {
                 groups[formattedDate] = [];
@@ -44,8 +44,18 @@
                         <span className={ style.dateSpan }>{date}</span>
                         {
                             historiesGroup.length > 0 && histories.map(( item, i ) => (
-                                <div key={i}>
+                                <div className={style.itemContainer} key={i}>
                                     <li>{item.name}</li>
+                                    <div className={style.IconContainer}>
+                                        <Image
+                                            priority
+                                            src={"/trash.svg"}
+                                            className={`${style.Icon}`}
+                                            height={15}
+                                            width={15}
+                                            alt="Trash icon"
+                                        />
+                                    </div>
                                 </div>
                             )) 
                         }
