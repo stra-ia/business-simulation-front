@@ -1,13 +1,15 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ChatBox from "./components/chatbox/Chatbox";
 import style from "./page.module.css";
 import Brief from "./components/brief/Brief";
 import * as THREE from "three";
 import CardHome from "./components/cardHome/CardHome";
+import Sidebar from "./components/sidebar/Sidebar";
 
 export default function Page() {
   const mountRef = useRef(null);
+  const [showSidebar,setShowSidebar] = useState(false)
 
   useEffect(() => {
     // Escena
@@ -143,11 +145,15 @@ export default function Page() {
     };
   }, []);
   return (
-    <div className={style.main}>
-      <div className={style.backgroundCanvas} ref={mountRef}></div>
-      <ChatBox />
-      <Brief />
-      {/* <CardHome/> */}
+    <div className={style.mainContainer}>
+      <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
+      <div className={style.main} onClick={ () => setShowSidebar(false)}>
+        <div className={style.backgroundCanvas} ref={mountRef}></div>
+          {/* <ChatBox />
+          <Brief /> */}
+          <CardHome/>
+      </div>
     </div>
+    
   );
 }
