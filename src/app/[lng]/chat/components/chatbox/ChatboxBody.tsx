@@ -184,7 +184,7 @@ export default function ChatboxBody({
                 className={style.iconRobot}
               />
             </div>
-            <div className={style.messageForMe}>...</div>
+            <div className={`${style.messageForMe} ${style.sending}`}>...</div>
           </div>
         )}
       </div>

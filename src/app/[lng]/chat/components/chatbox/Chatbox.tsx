@@ -16,11 +16,15 @@ import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { briefPoints, briefResumeAtom } from '@/atoms/briefPoints'
 import { isDisabledAtom } from '@/atoms/chatBot'
 import { ChatbotService } from '@/services/ChatBotService'
+import { useParams } from 'next/navigation'
+import { useTranslation } from '@/app/i18n/client'
 
 const defaultBotMessage: Messages = {
   role: authorType.BOT,
-  message:
-    '**¡Bienvenido al Simulador de Entrenamiento de Ventas!** Estoy aquí para ayudarte a crear un perfil de cliente para tu sesión de práctica. Primero, dime, ¿qué tipo de cliente quieres practicar? ¿CEO, Gerente de Producto o Ventas?',
+  // message:
+  //   '**¡Bienvenido al Simulador de Entrenamiento de Ventas!** Estoy aquí para ayudarte a crear un perfil de cliente para tu sesión de práctica. Primero, dime, ¿qué tipo de cliente quieres practicar? ¿CEO, Gerente de Producto o Ventas?',
+  // message:
+  //   "**Welcome to the Sales Training Simulator!** I'm here to help you create a customer profile for your practice session. First, tell me, what type of customer would you like to practice with? CEO, Product Manager, or Sales?",
   error: false,
   date: new Date()
 }
@@ -39,6 +43,11 @@ export default function Chatbox({ type = AreaType.MARKETING }: ChatBoxProps) {
   const genAI = new GoogleGenerativeAI(
     'AIzaSyCM5ekAWoggT5PtyOMu-bMLuJrauQgPO8M'
   )
+
+  const { lng } = useParams()
+  const { t } = useTranslation(lng, 'chatbox')
+
+  defaultBotMessage.message = t('ChatBox.messageStart')
 
   const updateFildFunc: FunctionDeclaration = {
     name: 'updateIsField',
@@ -187,18 +196,20 @@ export default function Chatbox({ type = AreaType.MARKETING }: ChatBoxProps) {
       text = result.response.candidates[0].content.parts[0].text
     }
 
-    const historyModified = messages.map((item: any) => {
-      if (
-        item.message &&
-        (item.role === authorType.BOT || item.role === authorType.USER)
-      )
-        return {
-          role: item.role,
-          content: item.message
-        }
-    })
+    const historyModified: any = messages
+      .filter((message) => message.message !== null && message.message !== '')
+      .map((item: any) => {
+        if (
+          item.message &&
+          (item.role === authorType.BOT || item.role === authorType.USER)
+        )
+          return {
+            role: item.role,
+            content: item.message
+          }
+      })
     historyModified.unshift({
-      role: 'user',
+      role: authorType.USER,
       content: 'Dame un mensaje de bienvenida'
     })
 

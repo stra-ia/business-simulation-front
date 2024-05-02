@@ -213,6 +213,24 @@
   scrollbar-width: none;
 }
 
+.sending {
+  animation: sending 1.5s infinite;
+  animation-delay: 2s;
+
+}
+
+@keyframes sending {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .file {
   border-radius: 12px;
   padding: 2px;
