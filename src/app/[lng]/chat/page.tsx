@@ -8,6 +8,7 @@ import CardHome from "./components/cardHome/CardHome";
 import Sidebar from "./components/sidebar/Sidebar";
 import { useAtomValue } from "jotai";
 import { typeArea } from "@/atoms/type";
+import ModalResult from "./components/modalResult/ModalResult";
 
 export default function Page() {
   const mountRef = useRef(null);
@@ -159,6 +160,7 @@ export default function Page() {
           <>
             <ChatBox />
             <Brief />
+            <ModalResult/>
           </>
         }
       </div>
