@@ -9,7 +9,7 @@ import { BriefPoints, briefPoints } from "@/atoms/briefPoints";
 
 export default function BriefBody() {
   const { lng } = useParams();
-  const { t } = useTranslation(lng, "chatbox");
+  const { t } = useTranslation(lng, "salesBrief");
   const campaignDone = false;
   const themes: any = useAtomValue(briefPoints);
 
@@ -34,7 +34,7 @@ export default function BriefBody() {
               : `${style.closeCampaignButton}`
           }
         >
-          <p>Cerrar campaña</p>
+          <p>{t(`buttons.closeCampaign`)}</p>
         </button>
       </div>
     </>
