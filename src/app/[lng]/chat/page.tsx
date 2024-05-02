@@ -9,12 +9,14 @@ import Sidebar from "./components/sidebar/Sidebar";
 import { useAtomValue } from "jotai";
 import { typeArea } from "@/atoms/type";
 import Modal from "./components/modal/Modal";
+import Feedback from "./components/feedback/Feeback";
 
 export default function Page() {
   const mountRef = useRef(null);
   const [showSidebar, setShowSidebar] = useState(false);
   const AreaType = useAtomValue(typeArea);
   const [showModal, setShowModal] = useState(false)
+  const [showFeedback, setShowFeedback] = useState(false)
 
   const handleModal = () => {
     console.log('cerrando/abriendo modal')
@@ -182,10 +184,17 @@ export default function Page() {
           <CardHome />
         ) : (
           <>
-            <ChatBox />
-            <Brief />
             {
-              showModal && <Modal onClose={handleModal} results={result} />
+              !showFeedback ?
+              <>
+                <ChatBox />
+                <Brief />
+                {
+                  showModal && <Modal onClose={handleModal} results={result} />
+                }
+              </>
+              :
+              <Feedback/>
             }
           </>
         )}
