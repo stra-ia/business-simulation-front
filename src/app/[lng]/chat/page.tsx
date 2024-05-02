@@ -183,7 +183,7 @@ export default function Page() {
       <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
       <div className={style.main} onClick={() => setShowSidebar(false)}>
         <div className={style.backgroundCanvas} ref={mountRef}></div>
-        {!AreaType == null ? (
+        { AreaType == null ? (
           <CardHome />
         ) : (
           <>
