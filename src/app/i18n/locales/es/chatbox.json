@@ -1,5 +1,6 @@
 {
-  "chatbox": {
-    "messageWelcome": "Definiendo Brief. Puedes iniciar la conversación para construir tu campaña."
+  "ChatBox": {
+    "messageWelcome": "Definiendo Brief. Puedes iniciar la conversación para construir tu campaña.",
+    "messageStart": "**¡Bienvenido al Simulador de Entrenamiento de Ventas!** Estoy aquí para ayudarte a crear un perfil de cliente para tu sesión de práctica. Primero, dime, ¿qué tipo de cliente quieres practicar? ¿CEO, Gerente de Producto o Ventas?"
   }
 }
