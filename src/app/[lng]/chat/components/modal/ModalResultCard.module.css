@@ -1,0 +1,63 @@
+.modalBodyResultsContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.modalBodyResult {
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+    border: 1px solid #FF8A00;
+    padding: 15px;
+    /* border-image-source: linear-gradient(102.76deg, #FF8A00 0.58%, rgba(255, 138, 0, 0.5) 99.42%); */
+}
+
+.modalBodyResutNumber{
+  color: #ffffff;
+  font-size: 40px;
+}
+
+.modalBodyResultsImageContainer{
+  display: flex;
+  border-radius: 20px;
+  background-color: #B26000;
+  display: flex;
+  width: 20%;
+  height: 100%;
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  border-radius: 50px;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.modalResultsImage{
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  height: 50%;
+  padding: 1%;
+}
+
+.modalBodyResultHeader{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+  padding: 15px;
+  height: 80px;
+}
+
+.modalBodyResutTitle{
+  display: flex;
+  flex-direction: row;
+  color: #ffffff;
+  align-self: center;
+}
+
+.modalBodyAddTitle{
+  font-size: 14px !important;
+  font-weight: 700;
+}

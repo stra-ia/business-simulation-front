@@ -8,12 +8,18 @@ import CardHome from "./components/cardHome/CardHome";
 import Sidebar from "./components/sidebar/Sidebar";
 import { useAtomValue } from "jotai";
 import { typeArea } from "@/atoms/type";
-import ModalResult from "./components/modalResult/ModalResult";
+import Modal from "./components/modal/Modal";
 
 export default function Page() {
   const mountRef = useRef(null);
   const [showSidebar, setShowSidebar] = useState(false);
   const AreaType = useAtomValue(typeArea);
+  const [showModal, setShowModal] = useState(false)
+
+  const handleModal = () => {
+    console.log('cerrando/abriendo modal')
+    setShowModal(!showModal)
+  }
 
   useEffect(() => {
     // Escena
@@ -148,6 +154,25 @@ export default function Page() {
       material2.dispose();
     };
   }, []);
+
+  const result = {
+    ad: {
+      title: 'Running style life',
+      description: 'El running transmite la emoción y la liberación de correr, destacando la fuerza, la determinación y los logros personales. Promueve productos relacionados con el running y alienta un estilo de vida activo y saludable.',
+      image: 'https://img.freepik.com/free-vector/drink-ad-nature-watermelon-juice_52683-34242.jpg' 
+    },
+    metrics: {
+      investment : {
+        total: '55 mil',
+        title: 'Inversión total'
+      },
+      gathered : {
+        total: '120 mil',
+        title: 'Total de impresiones'
+      }
+    }
+  }
+
   return (
     <div className={style.mainContainer}>
       <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
@@ -159,7 +184,9 @@ export default function Page() {
           <>
             <ChatBox />
             <Brief />
-            <ModalResult/>
+            {
+              showModal && <Modal onClose={handleModal} results={result} />
+            }
           </>
         )}
       </div>
