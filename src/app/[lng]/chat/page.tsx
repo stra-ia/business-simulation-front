@@ -11,7 +11,7 @@ import { typeArea } from "@/atoms/type";
 
 export default function Page() {
   const mountRef = useRef(null);
-  const [showSidebar,setShowSidebar] = useState(false)
+  const [showSidebar, setShowSidebar] = useState(false);
   const AreaType = useAtomValue(typeArea);
 
   useEffect(() => {
@@ -150,19 +150,17 @@ export default function Page() {
   return (
     <div className={style.mainContainer}>
       <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
-      <div className={style.main} onClick={ () => setShowSidebar(false)}>
+      <div className={style.main} onClick={() => setShowSidebar(false)}>
         <div className={style.backgroundCanvas} ref={mountRef}></div>
-        {
-          AreaType == null ? 
-          <CardHome/>
-          :
+        {!AreaType == null ? (
+          <CardHome />
+        ) : (
           <>
             <ChatBox />
             <Brief />
           </>
-        }
+        )}
       </div>
     </div>
-    
   );
 }

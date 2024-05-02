@@ -1,17 +1,20 @@
-import React, { useEffect, useMemo, useRef } from "react";
-import style from "./BriefBody.module.css";
-import BriefCard from "./BriefCard";
-import BriefResume from "./BriefResume";
-import { useParams } from "next/navigation";
-import { useTranslation } from "@/app/i18n/client";
-import { useAtomValue } from "jotai";
-import { BriefPoints, briefPoints } from "@/atoms/briefPoints";
+import React, { useEffect, useMemo, useRef } from 'react'
+import style from './BriefBody.module.css'
+import BriefCard from './BriefCard'
+import BriefResume from './BriefResume'
+import { useParams } from 'next/navigation'
+import { useTranslation } from '@/app/i18n/client'
+import { useAtomValue } from 'jotai'
+import { BriefPoints, briefPoints, briefResumeAtom } from '@/atoms/briefPoints'
 
 export default function BriefBody() {
-  const { lng } = useParams();
+  const { lng } = useParams()
   const { t } = useTranslation(lng, "salesBrief");
-  const campaignDone = false;
-  const themes: any = useAtomValue(briefPoints);
+  const briefResume = useAtomValue(briefResumeAtom)
+  const campaignDone = useMemo(() => briefResume, [briefResume])
+  const themes: any = useAtomValue(briefPoints)
+
+  console.log('briefResume', briefResume)
 
   return (
     <>
@@ -22,7 +25,9 @@ export default function BriefBody() {
         ) : (
           <div className={style.cardsContainer}>
             {themes.length > 0 &&
-              themes.map((item : BriefPoints, index: any) => <BriefCard key={index} {...item} />)}
+              themes.map((item: BriefPoints, index: any) => (
+                <BriefCard key={index} {...item} />
+              ))}
           </div>
         )}
       </div>
@@ -38,5 +43,5 @@ export default function BriefBody() {
         </button>
       </div>
     </>
-  );
+  )
 }

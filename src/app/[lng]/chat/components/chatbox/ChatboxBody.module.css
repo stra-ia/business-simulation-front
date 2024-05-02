@@ -9,12 +9,18 @@
   /* scrollbar-color: #f3f0dd #154734; */
   scrollbar-color: #a1a1a1 transparent !important;
   height: 100%;
+  position: relative
 }
+
 
 .body::-webkit-scrollbar {
   width: 8px;
 }
 
+.body h2 {
+  /* margin-bottom: 1rem; */
+  line-height: 24pt;
+}
 /* .body::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 } */
@@ -29,7 +35,25 @@
   height: 0px;
   border: none;
   border-top: 1px solid #4F4F4F;
+}
 
+.separator {
+  height: 0px;
+  border: none;
+  border-top: 1px solid #4F4F4F;
+}
+/* .opacity { */
+.separator::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+
+  background-image: linear-gradient(to bottom, #121212, 76%, #242323);
+  height: 1500px;
+  opacity: .5;
+  transform-origin: top;
+  transform: rotateZ(180deg);
 }
 
 .briefDisclaimer {
@@ -51,7 +75,7 @@
 }
 
 .briefDisclaimer span {
-  font-family: Poppins;
+  /* font-family: Poppins; */
   font-size: 12px;
   font-weight: 500;
   line-height: 24px;
@@ -91,6 +115,8 @@
   background: linear-gradient(180deg, #A35800 0%, #6A3C05 100%);
   position: relative;
   margin-right: 10px;
+  margin-top: 15px;
+  align-self: flex-start;
 }
 
 .iconRobot {
@@ -110,7 +136,7 @@
   color: #909090;
   margin: 15px 0px;
   align-self: flex-start;
-  font-family: Poppins;
+  /* font-family: Poppins; */
   font-size: 14px;
   font-weight: 400;
   line-height: 24px;
@@ -133,7 +159,7 @@
   margin: 15px 0px;
   color: #EFEFEF;
   align-self: flex-end;
-  font-family: Poppins;
+  /* font-family: Poppins; */
   font-size: 14px;
   font-weight: 400;
   line-height: 24px;
@@ -151,7 +177,7 @@
   margin: 15px 0px;
   color: #EFEFEF;
   align-self: flex-end;
-  font-family: Poppins;
+  /* font-family: Poppins; */
   font-size: 14px;
   font-weight: 400;
   line-height: 10px;
@@ -174,7 +200,7 @@
   margin: 15px 0px;
   color: #EFEFEF;
   align-self: flex-end;
-  font-family: Poppins;
+  /* font-family: Poppins; */
   font-size: 14px;
   font-weight: 600;
   line-height: 10px;
@@ -185,6 +211,24 @@
   height: 340px;
   overflow: none !important;
   scrollbar-width: none;
+}
+
+.sending {
+  animation: sending 1.5s infinite;
+  animation-delay: 2s;
+
+}
+
+@keyframes sending {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .file {
@@ -208,7 +252,7 @@
   margin: 15px 0px;
   color: #EFEFEF;
   align-self: flex-end;
-  font-family: Poppins;
+  /* font-family: Poppins; */
   font-size: 14px;
   font-weight: 400;
   line-height: 24px;
