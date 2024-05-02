@@ -105,13 +105,8 @@ export default function Sidebar({ showSidebar, setShowSidebar } : sideBar) {
                             ))
                         }
                     </div>
-                    <SidebarHistory histories={histories}/>
+                    {/* <SidebarHistory histories={histories}/> */}
                 </div>
-                {/* <img 
-                    onClick={ () => setShowSidebar(!showSidebar)}
-                    className={style.sidebarHeaderArrow} 
-                    src='/sideArrow.svg' alt="side arrow" 
-                    width={20} height={20} /> */}
             </div>
             :
             <div className={`${style.sidebarBodyHidden}`} onClick={ () => setShowSidebar(!showSidebar)}>

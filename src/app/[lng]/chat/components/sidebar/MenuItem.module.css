@@ -1,7 +1,7 @@
 .menuItemBody{
     display: flex;
     flex-direction: column;
-    width: 337px;
+    width: 100%;
     padding: 8px 12px 8px 8px;
     height: 32px;
     border-radius: 4px;

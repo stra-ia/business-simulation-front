@@ -1,8 +1,9 @@
 .mainContainer{
-  display: flex;
   justify-content: space-around;
   align-items: center;
   flex-direction: row;
+  display: flex;
+  width: 100%;
 }
 
 .main {
@@ -13,6 +14,7 @@
   padding: 1rem;
   min-height: 100vh;
   gap: 25px;
+  width: 75%;
 }
 
 .description {
