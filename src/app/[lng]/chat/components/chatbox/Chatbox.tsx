@@ -108,19 +108,12 @@ export default function Chatbox({ type = AreaType.MARKETING }: ChatBoxProps) {
     if (image) {
       await handleSendMultimedia(message.message, image)
     } else {
-      await handleSend(message.message)
+      await handleSendMessage(message.message)
     }
   }
 
   const handleSend = async (prompt: string) => {
-    // const result = await modelTextOnly.generateContentStream([prompt])
-
-    //block 1
-    let text = 'Mensaje de prueba'
-
     const result = await chat.sendMessage(prompt)
-
-    console.log('result', result)
 
     if (
       result.response.candidates &&
@@ -136,30 +129,22 @@ export default function Chatbox({ type = AreaType.MARKETING }: ChatBoxProps) {
         functionCall.name === 'updateIsField' ||
         functionCall.name === 'update_is_field'
       ) {
-        // alert('updateIsField')
-        // await new Promise((resolve) => {
-        //   setTimeout(resolve, 1200)
-        // })
         const newItems = update_is_field(
           functionCall.args.item_type,
           functionCall.args.new_value,
           salesObjects
         )
-        // console.log('newItems', newItems)
         setSalesObjects(newItems)
       }
-      //   await new Promise((resolve) => {
-      //     setTimeout(resolve, 500)
-      //   })
-    } else if (
-      result.response.candidates &&
-      result.response.candidates[0].content &&
-      result.response.candidates[0].content.parts &&
-      result.response.candidates[0].content.parts.length > 0 &&
-      result.response.candidates[0].content.parts[0].text
-    ) {
-      text = result.response.candidates[0].content.parts[0].text
     }
+  }
+
+  const handleSendMessage = async (prompt: string) => {
+    // const result = await modelTextOnly.generateContentStream([prompt])
+
+    await handleSend(prompt)
+
+    let text = 'Mensaje de prueba'
 
     const historyModified: any = messages
       .filter((message) => message.message !== null && message.message !== '')
@@ -254,6 +239,7 @@ export default function Chatbox({ type = AreaType.MARKETING }: ChatBoxProps) {
     // audio.play()
     // setAudioTranscript(data.transcription)
     let arr = messages
+    await handleSend(responseData.voice_message)
     let newMessage: Messages[] = [
       {
         role: authorType.USER,
