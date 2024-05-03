@@ -117,8 +117,12 @@ export default function Sidebar({ showSidebar, setShowSidebar }: sideBar) {
                 />
                 <p> {t(`sidebar.newCampaign`)} </p>
               </button>
-              {options.map(({ name }) => (
-                <MenuItem name={name} onClick={setType} />
+              {options.map(({ name }, index) => (
+                <MenuItem
+                  name={name}
+                  onClick={setType}
+                  key={`menu-item-${index}`}
+                />
               ))}
             </div>
             {/* <SidebarHistory histories={histories}/> */}

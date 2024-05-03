@@ -77,23 +77,6 @@ export default function ChatboxFooter({
     setMessage(e.target.value)
   }
 
-  const fileToGenerativePart = async (item: any) => {
-    const base64EncodedDataPromise = new Promise((resolve) => {
-      const reader = new FileReader()
-      if (reader) {
-        reader.onloadend = () => resolve(reader.result?.split(',')[1])
-        reader.readAsDataURL(item)
-      }
-    })
-    let data = await base64EncodedDataPromise
-    return {
-      inlineData: {
-        data,
-        mimeType: item.type
-      }
-    }
-  }
-
   const handleCreateMessage = async () => {
     if (!message || message.length < 1) {
       return

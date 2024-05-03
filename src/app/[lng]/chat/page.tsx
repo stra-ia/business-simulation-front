@@ -13,7 +13,7 @@ import Feedback from './components/feedback/Feeback'
 import { isFeedbackShowAtom, isShowedPredictionAtom } from '@/atoms/chatBot'
 
 export default function Page() {
-  const mountRef = useRef(null)
+  const mountRef = useRef<HTMLDivElement>(null)
   const [showSidebar, setShowSidebar] = useState(false)
   const AreaType = useAtomValue(typeArea)
   const [showModal, setShowModal] = useAtom(isShowedPredictionAtom)

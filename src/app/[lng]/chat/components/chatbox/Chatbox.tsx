@@ -2,13 +2,8 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import style from './Chatbox.module.css'
 import ChatboxBody from './ChatboxBody'
-import { AreaType, Messages, authorType } from './utils/enums'
-import {
-  GoogleGenerativeAI,
-  FunctionDeclaration,
-  Tool,
-  FunctionDeclarationSchemaType
-} from '@google/generative-ai'
+import { Messages, authorType } from './utils/enums'
+import { GoogleGenerativeAI } from '@google/generative-ai'
 import Image from 'next/image'
 import { validateDocFile } from './utils/validations'
 import ChatboxFooter from './ChatboxFooter'
@@ -118,7 +113,7 @@ export default function Chatbox() {
   }
 
   const handleSend = async (prompt: string) => {
-    const result = await chat.sendMessage(prompt)
+    const result: any = await chat.sendMessage(prompt)
 
     if (
       result.response.candidates &&
