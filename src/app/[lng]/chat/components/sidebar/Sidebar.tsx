@@ -48,7 +48,7 @@ export default function Sidebar({ showSidebar, setShowSidebar }: sideBar) {
   ]
 
   const setLngParam = (lenguage: string) => {
-    window.location.href = `http://localhost:3000/${lenguage}/chat`
+    window.location.href = `/${lenguage}/chat`
   }
 
   const setType = (type: Area) => {
