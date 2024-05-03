@@ -43,9 +43,7 @@ export default function Chatbox() {
   const setIsDisabled = useSetAtom(isDisabledAtom)
   const setMarketingPrediction = useSetAtom(predictionAtom)
   const setMarketingProposalAtom = useSetAtom(marketingProposalAtom)
-  const genAI = new GoogleGenerativeAI(
-    'AIzaSyCM5ekAWoggT5PtyOMu-bMLuJrauQgPO8M'
-  )
+  const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '')
 
   const type: any = useAtomValue(typeArea)
 

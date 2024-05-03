@@ -5,7 +5,7 @@ import {
 
 export const FeedbackService = {
   async getSalesFeedback(history: any, brief: string) {
-    return fetch('http://127.0.0.1:8000/feedback/sales', {
+    return fetch(`${process.env.MS_SIMULATION_API}/feedback/sales`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -23,7 +23,7 @@ export const FeedbackService = {
       ...prediction,
       brief
     }
-    return fetch('http://127.0.0.1:8000/feedback/marketing', {
+    return fetch(`${process.env.MS_SIMULATION_API}/feedback/marketing`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

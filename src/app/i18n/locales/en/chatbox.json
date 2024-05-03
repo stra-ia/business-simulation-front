@@ -1,6 +1,11 @@
 {
   "ChatBox": {
     "messageWelcome": "Defining Brief. You can start the conversation to build your campaign.",
-    "messageStart": "**Welcome to the Sales Training Simulator!** I'm here to help you create a customer profile for your practice session. First, tell me, what type of customer would you like to practice with? CEO, Product Manager, or Sales?"
+    "sales": {
+      "messageStart": "**Welcome to the Sales Training Simulator!** I'm here to help you create a customer profile for your practice session. First, tell me, what type of customer would you like to practice with? CEO, Product Manager, or Sales?"
+    },
+    "marketing": {
+      "messageStart": "I'm StraIA, your AI assistant for crafting effective digital marketing strategies. To personalize this experience and offer relevant case studies, I'd like to know a bit more about you. First, could you tell me about your specific role within your company related to digital marketing?"
+    }
   }
 }

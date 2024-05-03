@@ -161,7 +161,7 @@ export default function ChatboxBody({
                               className={style.seePrediction}
                               onClick={() => setIsShowedPredictionAtom(true)}
                             >
-                              Ver prediccion
+                              View Predictions
                             </div>
                           )}
                         </div>

@@ -2,7 +2,7 @@ import { AreaType } from '@/app/[lng]/chat/components/chatbox/utils/enums'
 
 export const ChatbotService = {
   async sendMessage(message: string, history: any, type: AreaType) {
-    return fetch('http://127.0.0.1:8000/chatbot/message', {
+    return fetch(`${process.env.MS_SIMULATION_API}/chatbot/message`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -11,7 +11,7 @@ export const ChatbotService = {
     })
   },
   async sendMessageVoice(formData: FormData) {
-    return fetch('http://127.0.0.1:8000/chatbot/voice', {
+    return fetch(`${process.env.MS_SIMULATION_API}/chatbot/voice`, {
       method: 'POST',
       body: formData
     })
