@@ -6,17 +6,17 @@ import Brief from './components/brief/Brief'
 import * as THREE from 'three'
 import CardHome from './components/cardHome/CardHome'
 import Sidebar from './components/sidebar/Sidebar'
-import { useAtomValue } from 'jotai'
+import { useAtom, useAtomValue } from 'jotai'
 import { typeArea } from '@/atoms/type'
 import Modal from './components/modal/Modal'
 import Feedback from './components/feedback/Feeback'
-import { isFeedbackShowAtom } from '@/atoms/chatBot'
+import { isFeedbackShowAtom, isShowedPredictionAtom } from '@/atoms/chatBot'
 
 export default function Page() {
   const mountRef = useRef(null)
   const [showSidebar, setShowSidebar] = useState(false)
   const AreaType = useAtomValue(typeArea)
-  const [showModal, setShowModal] = useState(false)
+  const [showModal, setShowModal] = useAtom(isShowedPredictionAtom)
   const showFeedback = useAtomValue(isFeedbackShowAtom)
 
   const handleModal = () => {
@@ -169,11 +169,15 @@ export default function Page() {
     metrics: {
       investment: {
         total: '55 mil',
-        title: 'Inversión total'
+        title: 'Cost-Effectiveness Ratio'
       },
       gathered: {
         total: '120 mil',
-        title: 'Total de impresiones'
+        title: 'Total impressions'
+      },
+      score: {
+        total: '120 mil',
+        title: 'Categorical Score'
       }
     }
   }
@@ -183,7 +187,7 @@ export default function Page() {
       <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
       <div className={style.main} onClick={() => setShowSidebar(false)}>
         <div className={style.backgroundCanvas} ref={mountRef}></div>
-        { AreaType == null ? (
+        {AreaType == null ? (
           <CardHome />
         ) : (
           <>

@@ -1,6 +1,12 @@
 {
   "ChatBox": {
     "messageWelcome": "Definiendo Brief. Puedes iniciar la conversación para construir tu campaña.",
-    "messageStart": "**¡Bienvenido al Simulador de Entrenamiento de Ventas!** Estoy aquí para ayudarte a crear un perfil de cliente para tu sesión de práctica. Primero, dime, ¿qué tipo de cliente quieres practicar? ¿CEO, Gerente de Producto o Ventas?"
+    "sales": {
+
+      "messageStart": "**¡Bienvenido al Simulador de Entrenamiento de Ventas!** Estoy aquí para ayudarte a crear un perfil de cliente para tu sesión de práctica. Primero, dime, ¿qué tipo de cliente quieres practicar? ¿CEO, Gerente de Producto o Ventas?"
+    },
+    "marketing": {
+      "messageStart": "¡Hola! Soy StraIA, tu chatbot de marketing digital. Estoy aquí para ayudarte a crear estudios de caso realistas para simular y analizar diferentes estrategias de marketing. Primero, cuéntame un poco sobre tu rol en la empresa relacionado con el marketing digital. Esto me ayudará a adaptar los escenarios a tus capacidades y responsabilidades."
+    }
   }
 }

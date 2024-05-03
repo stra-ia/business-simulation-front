@@ -74,6 +74,15 @@
   align-items: center;
 }
 
+.seePrediction {
+  background: #7A4201;
+  width: fit-content;
+  padding: 5px 10px;
+  border-radius: 8px;
+  margin: 1rem 0;
+  cursor: pointer;
+}
+
 .briefDisclaimer span {
   /* font-family: Poppins; */
   font-size: 12px;

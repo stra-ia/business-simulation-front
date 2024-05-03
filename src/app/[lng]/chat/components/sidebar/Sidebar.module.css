@@ -9,6 +9,11 @@
     justify-content: center;
 
     width: 25%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 1000;
 }
 
 .sidebarBody {
@@ -203,40 +208,10 @@
 }
 
 
-@media (max-width: 700px) {
-    .sidebarMainContainer{
-      width:  20%;
-    }
-  }
-  
-  /* Tablet and Smaller Desktop */
-  @media (min-width: 701px) and (max-width: 1120px) {
-        .sidebarMainContainer{
-            width:  25%;
-        }
-    }
-
-    @media (max-width: 1280px) {
-        .sidebarMainContainer{
-            width:  30%;
-        }
-    }
-
-    @media (max-width: 1440px) {
-        .sidebarMainContainer{
-            width:  20%;
-        }
-    }
-
-    @media (max-width: 1780px) {
-        .sidebarMainContainer{
-            width:  20%;
-        }
-    }
 
     @media (max-width: 2000px) {
         .sidebarMainContainer{
-            width:  18% !important;
+            width:  25% !important;
         }
         .sidebarHeaderTitle{
             font-size: 15px;

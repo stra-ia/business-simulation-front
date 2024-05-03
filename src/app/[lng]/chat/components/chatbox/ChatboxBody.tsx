@@ -7,7 +7,8 @@ import FileError from './FileError'
 import { useParams } from 'next/navigation'
 import { useTranslation } from '@/app/i18n/client'
 import { briefResumeAtom } from '@/atoms/briefPoints'
-import { useAtomValue } from 'jotai'
+import { useAtomValue, useSetAtom } from 'jotai'
+import { isShowedPredictionAtom } from '@/atoms/chatBot'
 
 interface ChatboxBodyProps {
   messages: Messages[]
@@ -30,6 +31,7 @@ export default function ChatboxBody({
   const { lng } = useParams()
   const { t } = useTranslation(lng, 'brief')
   const briefResume = useAtomValue(briefResumeAtom)
+  const setIsShowedPredictionAtom = useSetAtom(isShowedPredictionAtom)
   const campaignDone = useMemo(
     () => (!briefResume ? false : true),
     [briefResume]
@@ -154,6 +156,14 @@ export default function ChatboxBody({
                             )
                             /// audio bubble [end] ///
                           }
+                          {item.havePrediction && (
+                            <div
+                              className={style.seePrediction}
+                              onClick={() => setIsShowedPredictionAtom(true)}
+                            >
+                              Ver prediccion
+                            </div>
+                          )}
                         </div>
                       </div>
                     )

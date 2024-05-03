@@ -14,11 +14,18 @@ import { validateDocFile } from './utils/validations'
 import ChatboxFooter from './ChatboxFooter'
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { briefPoints, briefResumeAtom } from '@/atoms/briefPoints'
-import { audioSrcAtom, isDisabledAtom, messagesAtom } from '@/atoms/chatBot'
+import {
+  audioSrcAtom,
+  isDisabledAtom,
+  marketingProposalAtom,
+  messagesAtom,
+  predictionAtom
+} from '@/atoms/chatBot'
 import { ChatbotService } from '@/services/ChatBotService'
 import { useParams } from 'next/navigation'
 import { useTranslation } from '@/app/i18n/client'
 import { functionsTools, update_is_field } from './utils/chatGeminiFunctions'
+import { typeArea } from '@/atoms/type'
 
 const defaultBotMessage: Messages = {
   role: authorType.BOT,
@@ -27,25 +34,25 @@ const defaultBotMessage: Messages = {
   date: new Date()
 }
 
-interface ChatBoxProps {
-  type?: AreaType
-}
-
-export default function Chatbox({ type = AreaType.MARKETING }: ChatBoxProps) {
+export default function Chatbox() {
   const [messages, setMessages] = useAtom(messagesAtom)
   const [isSending, setIsSending] = useState(false)
   const salesObjects = useAtomValue(briefPoints)
   const setSalesObjects = useSetAtom(briefPoints)
   const setBriefResume = useSetAtom(briefResumeAtom)
   const setIsDisabled = useSetAtom(isDisabledAtom)
+  const setMarketingPrediction = useSetAtom(predictionAtom)
+  const setMarketingProposalAtom = useSetAtom(marketingProposalAtom)
   const genAI = new GoogleGenerativeAI(
     'AIzaSyCM5ekAWoggT5PtyOMu-bMLuJrauQgPO8M'
   )
 
+  const type: any = useAtomValue(typeArea)
+
   const { lng } = useParams()
   const { t } = useTranslation(lng, 'chatbox')
 
-  defaultBotMessage.message = t('ChatBox.messageStart')
+  defaultBotMessage.message = t(`ChatBox.${type.toLowerCase()}.messageStart`)
 
   const modelTextOnly = genAI.getGenerativeModel({
     model: 'gemini-pro',
@@ -166,17 +173,20 @@ export default function Chatbox({ type = AreaType.MARKETING }: ChatBoxProps) {
     const response = await ChatbotService.sendMessage(
       prompt,
       historyModified.slice(0, -1),
-      type
+      type.toLowerCase()
     )
     const responseData = await response.json()
     text = responseData.message
+
+    console.log('responseData', responseData)
 
     let arr = messages
     let newMessage: Messages = {
       role: authorType.BOT,
       message: text,
       error: false,
-      date: new Date()
+      date: new Date(),
+      havePrediction: Boolean(responseData.marketing_prediction)
     }
     // console.log('responseData', responseData.clientBrief)
 
@@ -190,6 +200,13 @@ export default function Chatbox({ type = AreaType.MARKETING }: ChatBoxProps) {
         date: new Date()
       }
       arr.push(separatorMessage)
+    }
+
+    if (responseData.marketing_prediction) {
+      setMarketingPrediction(responseData.marketing_prediction)
+    }
+    if (responseData.marketin_proposal) {
+      setMarketingProposalAtom(responseData.marketin_proposal)
     }
 
     arr.push(newMessage)

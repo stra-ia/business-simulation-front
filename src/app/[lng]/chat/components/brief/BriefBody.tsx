@@ -10,10 +10,13 @@ import {
   feedbackAtom,
   isFeedbackShowAtom,
   isLoadingFeedbackAtom,
-  messagesAtom
+  marketingProposalAtom,
+  messagesAtom,
+  predictionAtom
 } from '@/atoms/chatBot'
 import { AreaType, authorType } from '../chatbox/utils/enums'
 import { FeedbackService } from '@/services/FeedbackServices'
+import { typeArea } from '@/atoms/type'
 
 const otherMessages = [
   {
@@ -162,33 +165,48 @@ export default function BriefBody() {
   const setIsFeedbackShow = useSetAtom(isFeedbackShowAtom)
   const setIsLoading = useSetAtom(isLoadingFeedbackAtom)
   const setFeedback = useSetAtom(feedbackAtom)
+  const type: any = useAtomValue(typeArea)
+  const marketingProposal = useAtomValue(marketingProposalAtom)
+  const prediction = useAtomValue(predictionAtom)
 
   const gettingFeedback = async () => {
+    console.log('type', type)
     setIsFeedbackShow(true)
-    const historyModified: any = otherMessages
-      .filter((message) => message.message !== null && message.message !== '')
-      .map((item: any) => {
-        if (
-          item.message &&
-          (item.role === authorType.BOT || item.role === authorType.USER)
-        )
-          return {
-            role: item.role,
-            content: item.message
-          }
+    const verifyMarketingType = type.toLowerCase() === AreaType.MARKETING
+    console.log('verifyMarketingType', verifyMarketingType)
+    if (verifyMarketingType && marketingProposal && prediction) {
+      const response = await FeedbackService.getMarketingFeedback(
+        marketingProposal,
+        prediction
+      )
+      const data = await response.json()
+      setFeedback(data.feedback)
+    } else if (!marketingProposal && !prediction) {
+      const historyModified: any = otherMessages
+        .filter((message) => message.message !== null && message.message !== '')
+        .map((item: any) => {
+          if (
+            item.message &&
+            (item.role === authorType.BOT || item.role === authorType.USER)
+          )
+            return {
+              role: item.role,
+              content: item.message
+            }
+        })
+      historyModified.unshift({
+        role: authorType.USER,
+        content: 'Dame un mensaje de bienvenida'
       })
-    historyModified.unshift({
-      role: authorType.USER,
-      content: 'Dame un mensaje de bienvenida'
-    })
 
-    const response = await FeedbackService.getSalesFeedback(
-      historyModified,
-      "Alright, let's begin!  I'm Sarah Jones, CEO of NovaTech. We're a medium-sized company in the technology industry. I'm always open to exploring ways to improve our operations and stay competitive. Tell me, what brings you here today? \n"
-    )
-    const data = await response.json()
+      const response = await FeedbackService.getSalesFeedback(
+        historyModified,
+        "Alright, let's begin!  I'm Sarah Jones, CEO of NovaTech. We're a medium-sized company in the technology industry. I'm always open to exploring ways to improve our operations and stay competitive. Tell me, what brings you here today? \n"
+      )
+      const data = await response.json()
+      setFeedback(data.feedback)
+    }
     setIsLoading(false)
-    setFeedback(data.feedback)
   }
 
   return (
