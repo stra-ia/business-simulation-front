@@ -14,15 +14,19 @@ interface ChatboxBodyProps {
   type: AreaType
   handleChangeFile: (event: ChangeEvent<HTMLInputElement>) => void
   isSending: boolean
+  recording: boolean
 }
 
 export default function ChatboxBody({
   messages,
   type,
   handleChangeFile,
-  isSending
+  isSending,
+  recording
 }: ChatboxBodyProps) {
   const bodyRef = useRef<HTMLDivElement>(null)
+  const hrRef = useRef<HTMLHRElement>(null)
+  const audioRefs = useRef<HTMLAudioElement[]>([])
   const { lng } = useParams()
   const { t } = useTranslation(lng, 'brief')
   const briefResume = useAtomValue(briefResumeAtom)
@@ -70,6 +74,22 @@ export default function ChatboxBody({
     [messages]
   )
 
+  useEffect(() => {
+    const rect = hrRef.current?.getBoundingClientRect()
+    if (rect) {
+      console.log('Rect', rect)
+      console.log('Rect top', rect.top)
+    }
+  }, [messages])
+
+  useEffect(() => {
+    if (recording) {
+      audioRefs.current.forEach((audio, idx) => {
+        audio.pause()
+      })
+    }
+  }, [recording])
+
   return (
     <>
       {type == AreaType.MARKETING && (
@@ -90,7 +110,7 @@ export default function ChatboxBody({
                     item.role == authorType.BOT && (
                       <div
                         key={i}
-                        className={`${style.messageContainer} 
+                        className={`${style.messageContainer}
                                         ${
                                           isSameGroup(
                                             item.role,
@@ -112,6 +132,28 @@ export default function ChatboxBody({
                         </div>
                         <div key={i} className={style.messageForMe}>
                           <Markdown>{item.message}</Markdown>
+                          {
+                            /// audio bubble [start] ///
+                            item.voice && (
+                              <audio
+                                key={i}
+                                ref={(audio) => {
+                                  if (audio) {
+                                    audioRefs.current[i] = audio
+                                  }
+                                }}
+                                controls
+                                autoPlay
+                                src={item.voice}
+                                style={{
+                                  marginTop: '10px',
+                                  height: '30px'
+                                }}
+                                id={`audio-player-${i}`}
+                              />
+                            )
+                            /// audio bubble [end] ///
+                          }
                         </div>
                       </div>
                     )

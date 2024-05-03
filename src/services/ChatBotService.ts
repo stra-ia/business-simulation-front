@@ -9,5 +9,11 @@ export const ChatbotService = {
       },
       body: JSON.stringify({ message, history, type })
     })
+  },
+  async sendMessageVoice(formData: FormData) {
+    return fetch('http://127.0.0.1:8000/chatbot/voice', {
+      method: 'POST',
+      body: formData
+    })
   }
 }

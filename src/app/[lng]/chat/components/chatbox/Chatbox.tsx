@@ -3,13 +3,18 @@ import React, { ChangeEvent, useEffect, useState } from 'react'
 import style from './Chatbox.module.css'
 import ChatboxBody from './ChatboxBody'
 import { AreaType, Messages, authorType } from './utils/enums'
-import { GoogleGenerativeAI } from '@google/generative-ai'
+import {
+  GoogleGenerativeAI,
+  FunctionDeclaration,
+  Tool,
+  FunctionDeclarationSchemaType
+} from '@google/generative-ai'
 import Image from 'next/image'
 import { validateDocFile } from './utils/validations'
 import ChatboxFooter from './ChatboxFooter'
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { briefPoints, briefResumeAtom } from '@/atoms/briefPoints'
-import { isDisabledAtom, messagesAtom } from '@/atoms/chatBot'
+import { audioSrcAtom, isDisabledAtom, messagesAtom } from '@/atoms/chatBot'
 import { ChatbotService } from '@/services/ChatBotService'
 import { useParams } from 'next/navigation'
 import { useTranslation } from '@/app/i18n/client'
@@ -89,7 +94,8 @@ export default function Chatbox({ type = AreaType.MARKETING }: ChatBoxProps) {
   const [fileExtension, setFileExtension] = useState('')
   const [previewFile, setPreviewFile] = useState('')
   const [showUploadButton, setShowUploadButton] = useState(false)
-
+  const [recording, setRecording] = useState(false)
+  const [loadingRecord, setLoadingRecord] = useState(false)
   const handleAddMessage = async (message: Messages, image: any = null) => {
     let arr = messages
     arr.push(message)
@@ -207,6 +213,70 @@ export default function Chatbox({ type = AreaType.MARKETING }: ChatBoxProps) {
     setIsDisabled(false)
   }
 
+  const handleSendVoice = async (voice: Blob) => {
+    setRecording(true)
+    setLoadingRecord(true)
+    const historyModified: any = messages
+      .filter((message) => message.message !== null && message.message !== '')
+      .map((item: any) => {
+        if (
+          item.message &&
+          (item.role === authorType.BOT || item.role === authorType.USER)
+        )
+          return {
+            role: item.role,
+            content: item.message
+          }
+      })
+    historyModified.unshift({
+      role: authorType.USER,
+      content: 'Dame un mensaje de bienvenida'
+    })
+    const formData = new FormData()
+    formData.append('file', voice)
+    formData.append('history', JSON.stringify(historyModified))
+    formData.append('type', type.toString())
+    const response = await ChatbotService.sendMessageVoice(formData)
+    const responseData = await response.json()
+    console.log('responseData', responseData)
+    const audioBlob = new Blob(
+      [
+        new Uint8Array(
+          atob(responseData.voice)
+            .split('')
+            .map((char) => char.charCodeAt(0))
+        )
+      ],
+      { type: 'audio/mpeg' }
+    )
+    const audioUrl = URL.createObjectURL(audioBlob)
+    // const audio = new Audio(audioUrl)
+    // audio.play()
+    // setAudioTranscript(data.transcription)
+    let arr = messages
+    let newMessage: Messages[] = [
+      {
+        role: authorType.USER,
+        message: responseData.voice_message,
+        error: false,
+        date: new Date()
+      },
+      {
+        role: authorType.BOT,
+        message: responseData.message,
+        voice: audioUrl,
+        error: false,
+        date: new Date()
+      }
+    ]
+    arr.push(...newMessage)
+    setRecording(false)
+    setLoadingRecord(false)
+    setMessages([...arr])
+    setIsSending(false)
+    setIsDisabled(false)
+  }
+
   const handleSendMultimedia = async (prompt: string, image: any) => {
     const result = await modelMultimedia.generateContentStream([
       prompt,
@@ -318,11 +388,14 @@ export default function Chatbox({ type = AreaType.MARKETING }: ChatBoxProps) {
       </div>
       <ChatboxBody
         type={type}
+        recording={recording}
         messages={messages}
         handleChangeFile={handleChangeFile}
         isSending={isSending}
       />
+
       <ChatboxFooter
+        recording={loadingRecord}
         addMessage={handleAddMessage}
         handleChangeFile={handleChangeFile}
         handleDropFile={handleDropFile}
@@ -334,6 +407,8 @@ export default function Chatbox({ type = AreaType.MARKETING }: ChatBoxProps) {
         setShowUploadButton={setShowUploadButton}
         fileData={file}
         setFile={setFile}
+        setRecording={setRecording}
+        handleSendVoice={handleSendVoice}
       />
     </div>
   )

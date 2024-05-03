@@ -10,3 +10,6 @@ export const isFeedbackShowAtom = atom<boolean>(false)
 export const feedbackAtom = atom<null | string>(null)
 
 export const isLoadingFeedbackAtom = atom<boolean>(true)
+
+export const audioSrcAtom = atom<string>('')
+export const isRecordingAtom = atom<boolean>(false)
