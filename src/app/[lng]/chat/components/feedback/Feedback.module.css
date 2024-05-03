@@ -6,7 +6,7 @@
     background: rgba(0, 0, 0, 0.6);
     border-radius: 20px;
     border: 0.5px solid #8C8C8C;
-    width: 50vw;
+    width: 60vw;
     height: 100vh;
     max-height: 820px;
     padding: 24px;
@@ -17,6 +17,19 @@
     flex-direction: column;
     width: 100%;
     height: 95%;
+}
+
+.loading {
+    padding-top: 2rem;
+}
+
+.overview {
+    height: 100%;
+    overflow: auto;
+    margin-top: 2rem;
+    & h2, & h3, & h4, & p, & li {
+        margin-bottom: 1rem;
+    }
 }
 
 .header{
@@ -44,7 +57,7 @@
 .footer{
     flex-direction: row;
     margin-top: 20px;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     display: flex;
 }

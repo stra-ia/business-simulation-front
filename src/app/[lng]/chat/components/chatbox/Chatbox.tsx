@@ -3,28 +3,21 @@ import React, { ChangeEvent, useEffect, useState } from 'react'
 import style from './Chatbox.module.css'
 import ChatboxBody from './ChatboxBody'
 import { AreaType, Messages, authorType } from './utils/enums'
-import {
-  GoogleGenerativeAI,
-  FunctionDeclaration,
-  Tool,
-  FunctionDeclarationSchemaType
-} from '@google/generative-ai'
+import { GoogleGenerativeAI } from '@google/generative-ai'
 import Image from 'next/image'
 import { validateDocFile } from './utils/validations'
 import ChatboxFooter from './ChatboxFooter'
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { briefPoints, briefResumeAtom } from '@/atoms/briefPoints'
-import { isDisabledAtom } from '@/atoms/chatBot'
+import { isDisabledAtom, messagesAtom } from '@/atoms/chatBot'
 import { ChatbotService } from '@/services/ChatBotService'
 import { useParams } from 'next/navigation'
 import { useTranslation } from '@/app/i18n/client'
+import { functionsTools, update_is_field } from './utils/chatGeminiFunctions'
 
 const defaultBotMessage: Messages = {
   role: authorType.BOT,
-  // message:
-  //   '**¡Bienvenido al Simulador de Entrenamiento de Ventas!** Estoy aquí para ayudarte a crear un perfil de cliente para tu sesión de práctica. Primero, dime, ¿qué tipo de cliente quieres practicar? ¿CEO, Gerente de Producto o Ventas?',
-  // message:
-  //   "**Welcome to the Sales Training Simulator!** I'm here to help you create a customer profile for your practice session. First, tell me, what type of customer would you like to practice with? CEO, Product Manager, or Sales?",
+  message: '',
   error: false,
   date: new Date()
 }
@@ -34,7 +27,7 @@ interface ChatBoxProps {
 }
 
 export default function Chatbox({ type = AreaType.MARKETING }: ChatBoxProps) {
-  const [messages, setMessages] = useState<Messages[]>([])
+  const [messages, setMessages] = useAtom(messagesAtom)
   const [isSending, setIsSending] = useState(false)
   const salesObjects = useAtomValue(briefPoints)
   const setSalesObjects = useSetAtom(briefPoints)
@@ -48,41 +41,6 @@ export default function Chatbox({ type = AreaType.MARKETING }: ChatBoxProps) {
   const { t } = useTranslation(lng, 'chatbox')
 
   defaultBotMessage.message = t('ChatBox.messageStart')
-
-  const updateFildFunc: FunctionDeclaration = {
-    name: 'updateIsField',
-    description: `Responsible for marking the progression of data collection by updating the 'isField' attribute for a specified field to 'true'. This function must be executed immediately after the user submits valid information for either the customer type, company size, or sales approach. It is critical to invoke this function selectively and only in direct response to the acquisition of these specific data points. It must not be called with unrelated input or used to transition to the profile creation phase.`,
-    parameters: {
-      type: FunctionDeclarationSchemaType.OBJECT,
-      properties: {
-        item_type: {
-          type: FunctionDeclarationSchemaType.STRING,
-          enum: ['customer', 'company_size', 'sales_approach'],
-          description: `Specifies which field's 'isField' attribute is to be updated, correlating to the type of information provided by the user. The valid fields are 'customer' for updating customer type, 'company_size' for the size of the company they are aiming to engage with (is very important), and 'sales_approach' for the sales approach (is very important). When set to 'true', it confirms the information has been provided and recorded.`
-        },
-        new_value: {
-          type: FunctionDeclarationSchemaType.BOOLEAN,
-          description:
-            "The new status for the 'isField' attribute, which must be set to 'true' to reflect the successful acquisition and recognition of the relevant field data by the chatbot."
-        }
-      },
-      required: ['item_type', 'new_value']
-    }
-  }
-
-  function update_is_field(item_type: string, new_value: boolean) {
-    const newItems = salesObjects.map((item) => {
-      if (item.type === item_type) {
-        return { ...item, isField: new_value }
-      }
-      return item
-    })
-    return newItems
-  }
-
-  const functionsTools: Tool = {
-    functionDeclarations: [updateFildFunc]
-  }
 
   const modelTextOnly = genAI.getGenerativeModel({
     model: 'gemini-pro',
@@ -178,7 +136,8 @@ export default function Chatbox({ type = AreaType.MARKETING }: ChatBoxProps) {
         // })
         const newItems = update_is_field(
           functionCall.args.item_type,
-          functionCall.args.new_value
+          functionCall.args.new_value,
+          salesObjects
         )
         // console.log('newItems', newItems)
         setSalesObjects(newItems)
@@ -215,7 +174,8 @@ export default function Chatbox({ type = AreaType.MARKETING }: ChatBoxProps) {
 
     const response = await ChatbotService.sendMessage(
       prompt,
-      historyModified.slice(0, -1)
+      historyModified.slice(0, -1),
+      type
     )
     const responseData = await response.json()
     text = responseData.message
@@ -245,18 +205,6 @@ export default function Chatbox({ type = AreaType.MARKETING }: ChatBoxProps) {
     setMessages([...arr])
     setIsSending(false)
     setIsDisabled(false)
-    //separation
-    //block 2
-    // await new Promise((resolve) => {
-    //   setTimeout(resolve, 200)
-    // })
-
-    // for await (const chunk of result.stream) {
-    //   const chunkText = chunk.text()
-    //   text += chunkText
-    //   arr[arr.length - 1].message = text
-    //   setMessages([...arr])
-    // }
   }
 
   const handleSendMultimedia = async (prompt: string, image: any) => {

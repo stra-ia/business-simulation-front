@@ -23,6 +23,18 @@
     "kpis": {
       "title": "KPIs",
       "description": "Key performance indicators."
+    },
+    "customer": {
+      "title": "Customer Type",
+      "description": "Specify the customer type for practice."
+    },
+    "company_size": {
+      "title": "Company Size",
+      "description": "Mention the company size for practice."
+    },
+    "sales_approach": {
+      "title": "Sales Approach",
+      "description": "Indicate the sales approach for practice."
     }
   },
   "buttons": {

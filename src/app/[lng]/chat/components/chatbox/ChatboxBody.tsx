@@ -4,6 +4,10 @@ import { AreaType, Messages, authorType } from './utils/enums'
 import Image from 'next/image'
 import Markdown from 'react-markdown'
 import FileError from './FileError'
+import { useParams } from 'next/navigation'
+import { useTranslation } from '@/app/i18n/client'
+import { briefResumeAtom } from '@/atoms/briefPoints'
+import { useAtomValue } from 'jotai'
 
 interface ChatboxBodyProps {
   messages: Messages[]
@@ -19,7 +23,18 @@ export default function ChatboxBody({
   isSending
 }: ChatboxBodyProps) {
   const bodyRef = useRef<HTMLDivElement>(null)
-  const hrRef = useRef<HTMLHRElement>(null)
+  const { lng } = useParams()
+  const { t } = useTranslation(lng, 'brief')
+  const briefResume = useAtomValue(briefResumeAtom)
+  const campaignDone = useMemo(
+    () => (!briefResume ? false : true),
+    [briefResume]
+  )
+  const campaignStage = useMemo(
+    () => (!briefResume ? 'empty' : 'filled'),
+    [briefResume]
+  )
+  console.log('campaignDone chat body', campaignDone)
   useEffect(() => {}, [])
   useEffect(() => {}, [messages])
   useEffect(() => {
@@ -55,22 +70,11 @@ export default function ChatboxBody({
     [messages]
   )
 
-  useEffect(() => {
-    const rect = hrRef.current?.getBoundingClientRect()
-    if (rect) {
-      console.log('Rect', rect)
-      console.log('Rect top', rect.top)
-    }
-  }, [messages])
-
   return (
     <>
       {type == AreaType.MARKETING && (
-        <div className={style.briefDisclaimer}>
-          <span>
-            Definiendo Brief. Puedes iniciar la conversación para construir tu
-            campaña.
-          </span>
+        <div className={style.briefDisclaimer} data-completed={campaignDone}>
+          <span>{t(`Brief.${campaignStage}.initialMessage`)}</span>
         </div>
       )}
       <hr className={style.hr} />
@@ -156,7 +160,7 @@ export default function ChatboxBody({
                   {item.role == authorType.SEPARATOR && !item.error && (
                     <>
                       <div className={style.opacity}></div>
-                      <hr ref={hrRef} className={style.separator} />
+                      <hr className={style.separator} />
                     </>
                   )}
                   {

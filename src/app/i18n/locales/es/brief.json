@@ -1,0 +1,10 @@
+{
+    "Brief": {
+        "empty": {
+            "initialMessage": "Definiendo Brief. Puedes iniciar la conversación para construir tu campaña."
+        },
+        "filled": {
+            "initialMessage": "Brief definido. Puedes iniciar una conversación con tu cliente."
+        }
+    }
+}
